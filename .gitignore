@@ -1,0 +1,9 @@
+.idea/
+
+vendor/
+build/
+
+composer.phar
+
+phpunit.xml
+phpunit.phar

@@ -1,0 +1,35 @@
+{
+  "name": "alexantr/yii2-elfinder",
+  "description": "elFinder file manager for Yii 2",
+  "keywords": ["yii2", "widget", "elfinder", "file manager"],
+  "type": "yii2-extension",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Alex Yashkin",
+      "email": "alex@yashkin.by"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/alexantr/yii2-elfinder/issues",
+    "source": "https://github.com/alexantr/yii2-elfinder"
+  },
+  "require": {
+    "yiisoft/yii2-jui": "~2.0.0",
+    "studio-42/elfinder": "^2.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "alexantr\\elfinder\\": "src"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    },
+    "asset-installer-paths": {
+      "npm-asset-library": "vendor/npm",
+      "bower-asset-library": "vendor/bower"
+    }
+  }
+}
