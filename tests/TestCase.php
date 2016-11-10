@@ -2,9 +2,10 @@
 
 namespace tests;
 
+use Yii;
 use yii\di\Container;
 use yii\helpers\ArrayHelper;
-use Yii;
+use yii\helpers\FileHelper;
 
 /**
  * This is the base class for all yii framework unit tests.
@@ -30,6 +31,12 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
     {
         parent::tearDown();
         $this->destroyApplication();
+    }
+
+    public static function tearDownAfterClass()
+    {
+        parent::tearDownAfterClass();
+        self::removeAssets();
     }
 
     /**
@@ -75,6 +82,24 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
     {
         Yii::$app = null;
         Yii::$container = new Container();
+    }
+
+    /**
+     * Remove assets
+     */
+    protected static function removeAssets()
+    {
+        $assets_path = Yii::getAlias('@tests/data/assets');
+        if ($assets_path && $handle = opendir($assets_path)) {
+            while (($file = readdir($handle)) !== false) {
+                if (strpos($file, '.') === 0) continue;
+                $path = $assets_path . DIRECTORY_SEPARATOR . $file;
+                if (is_dir($path)) {
+                    FileHelper::removeDirectory($path);
+                }
+            }
+            closedir($handle);
+        }
     }
 
     /**

@@ -38,7 +38,9 @@ class ElFinder extends Widget
         $this->settings['url'] = Url::toRoute($this->connectorRoute);
 
         if (!isset($this->settings['lang'])) {
-            $this->settings['lang'] = $this->getLangFromApp();
+            $this->settings['lang'] = Yii::$app->language;
+        } elseif ($this->settings['lang'] === false) {
+            unset($this->settings['lang']);
         }
 
         $this->settings['customData'] = [
@@ -56,11 +58,14 @@ class ElFinder extends Widget
         $view = $this->getView();
         $bundle = ElFinderAsset::register($view);
 
-        if (isset($this->settings['lang']) && $this->settings['lang'] !== false) {
+        if (isset($this->settings['lang'])) {
+            $this->settings['lang'] = $this->checkLanguage($this->settings['lang']);
             if (is_file($bundle->basePath . '/js/i18n/elfinder.' . $this->settings['lang'] . '.js')) {
                 $view->registerJsFile($bundle->baseUrl . '/js/i18n/elfinder.' . $this->settings['lang'] . '.js', [
                     'depends' => [ElFinderAsset::className()],
                 ]);
+            } else {
+                unset($this->settings['lang']);
             }
         }
 
@@ -90,14 +95,15 @@ CSSEXP;
     }
 
     /**
-     * Get client language from current Yii app language
+     * Set elFinder's correct "lang" param
      * Based on https://github.com/Studio-42/elFinder/wiki/Automatically-load-language
+     * @param string $language
      * @return string
      */
-    protected function getLangFromApp()
+    protected function checkLanguage($language)
     {
-        $full_lang = mb_strtolower(Yii::$app->language);
-        $lang = substr($full_lang, 0, 2);
+        $full_language = mb_strtolower($language);
+        $lang = substr($full_language, 0, 2);
         if ($lang == 'ja') {
             $lang = 'jp';
         } elseif ($lang == 'pt') {
@@ -105,7 +111,7 @@ CSSEXP;
         } elseif ($lang == 'ug') {
             $lang = 'ug_CN';
         } elseif ($lang == 'zh') {
-            $lang = ($full_lang == 'zh-tw' || $full_lang == 'zh_tw') ? 'zh_TW' : 'zh_CN';
+            $lang = ($full_language == 'zh-tw' || $full_language == 'zh_tw') ? 'zh_TW' : 'zh_CN';
         } elseif ($lang == 'be') {
             // for belarusian use russian instead english
             $lang = 'ru';

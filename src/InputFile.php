@@ -155,15 +155,18 @@ class InputFile extends InputWidget
             }
         }
 
+        $url_enc = Html::encode($this->url);
+        $button_id_enc = Html::encode($this->buttonOptions['id']);
+        $id_enc = Html::encode($this->options['id']);
         $js = <<<JSEXP
-jQuery(document).on('click', '#{$this->buttonOptions['id']}', function (e) {
+jQuery(document).on('click', '#$button_id_enc', function (e) {
     e.preventDefault();
     var w = screen.width / 1.5;
     var h = screen.height / 1.5;
     if (w < 900 && screen.width > 960) w = 900;
     if (h < 600 && screen.height > 660) h = 600;
     var params = 'menubar=no,toolbar=no,location=no,directories=no,status=no,fullscreen=no,width=' + w + ',height=' + h;
-    var win = window.open('{$this->url}', 'elfinder_{$this->options['id']}', params);
+    var win = window.open('$url_enc', 'elfinder_$id_enc', params);
     win.focus();
 });
 JSEXP;
