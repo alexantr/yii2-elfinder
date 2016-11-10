@@ -45,7 +45,9 @@ class ElfinderController extends Controller
                             'imgLib' => 'gd',
                             'accessControl' => function ($attr, $path) {
                                 // hide files/folders which begins with dot
-                                return (strpos(basename($path), '.') === 0) ? !($attr == 'read' || $attr == 'write') : null;
+                                return (strpos(basename($path), '.') === 0) ?
+                                    !($attr == 'read' || $attr == 'write') :
+                                    null;
                             },
                         ],
                     ],

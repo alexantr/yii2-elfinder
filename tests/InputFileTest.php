@@ -56,6 +56,8 @@ class InputFileTest extends TestCase
 
     public function testFilterParam()
     {
+        $view = Yii::$app->view;
+
         $model = new Post();
         $widget = InputFile::widget([
             'model' => $model,
@@ -64,7 +66,7 @@ class InputFileTest extends TestCase
             'filter' => ['image'],
         ]);
 
-        $out = Yii::$app->view->renderFile('@tests/data/views/layout.php', [
+        $out = $view->renderFile('@tests/data/views/layout.php', [
             'content' => $widget,
         ]);
 
@@ -81,8 +83,55 @@ class InputFileTest extends TestCase
         $this->assertContains($expected, $out);
     }
 
+    public function testMultipleTextarea()
+    {
+        $view = Yii::$app->view;
+
+        // model
+
+        $model = new Post();
+        $widget = InputFile::widget([
+            'model' => $model,
+            'attribute' => 'image',
+            'clientRoute' => '/elfinder/index',
+            'multiple' => true,
+            'useTextarea' => true,
+        ]);
+
+        $out = $view->renderFile('@tests/data/views/layout.php', [
+            'content' => $widget,
+        ]);
+
+        $expected = '<textarea id="post-image" class="form-control elfinder-form-control" name="Post[image]" rows="5"></textarea>' .
+            '<div class="help-block">' .
+            '<button type="button" id="post-image_button" class="btn btn-default elfinder-btn">Select</button>' .
+            '</div>';
+        $this->assertContains($expected, $out);
+
+        // name & value
+
+        $widget = InputFile::widget([
+            'id' => 'test',
+            'name' => 'test-image-name',
+            'clientRoute' => '/elfinder/index',
+            'multiple' => true,
+            'useTextarea' => true,
+        ]);
+
+        $out = $view->renderFile('@tests/data/views/layout.php', [
+            'content' => $widget,
+        ]);
+
+        $expected = '<textarea id="test" class="form-control elfinder-form-control" name="test-image-name" rows="5"></textarea>' .
+            '<div class="help-block">' .
+            '<button type="button" id="test_button" class="btn btn-default elfinder-btn">Select</button>' .
+            '</div>';
+        $this->assertContains($expected, $out);
+    }
+
     public function testPreview()
     {
+        $view = Yii::$app->view;
         $expected = '<div class="help-block elfinder-input-preview"><p>test-image.jpg</p></div>';
 
         // model
@@ -99,7 +148,7 @@ class InputFileTest extends TestCase
             },
         ]);
 
-        $out = Yii::$app->view->renderFile('@tests/data/views/layout.php', [
+        $out = $view->renderFile('@tests/data/views/layout.php', [
             'content' => $widget,
         ]);
 
@@ -116,7 +165,7 @@ class InputFileTest extends TestCase
             },
         ]);
 
-        $out = Yii::$app->view->renderFile('@tests/data/views/layout.php', [
+        $out = $view->renderFile('@tests/data/views/layout.php', [
             'content' => $widget,
         ]);
 
