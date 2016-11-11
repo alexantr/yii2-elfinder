@@ -1,7 +1,12 @@
-# elFinder for Yii 2
+# elFinder file manager for Yii 2
 
 This extension integrates an [elFinder](http://studio-42.github.io/elFinder/) file manager into
 [Yii framework 2.0](http://www.yiiframework.com).
+
+[![Latest Stable Version](https://poser.pugx.org/alexantr/yii2-elfinder/v/stable)](https://packagist.org/packages/alexantr/yii2-elfinder)
+[![Total Downloads](https://poser.pugx.org/alexantr/yii2-elfinder/downloads)](https://packagist.org/packages/alexantr/yii2-elfinder)
+[![License](https://poser.pugx.org/alexantr/yii2-elfinder/license)](https://packagist.org/packages/alexantr/yii2-elfinder)
+[![Build Status](https://travis-ci.org/alexantr/yii2-elfinder.svg?branch=master)](https://travis-ci.org/alexantr/yii2-elfinder)
 
 ## Installation
 
