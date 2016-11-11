@@ -12,12 +12,20 @@ class ElFinderTest extends TestCase
      */
     public function testEmptyConnectorRoute()
     {
-        ElFinder::widget();
+        $view = $this->mockView();
+
+        ElFinder::widget([
+            'view' => $view,
+            'id' => 'test',
+        ]);
     }
 
     public function testRender()
     {
+        $view = $this->mockView();
+
         $out = ElFinder::widget([
+            'view' => $view,
             'id' => 'test',
             'connectorRoute' => '/elfinder/connector',
         ]);
@@ -29,7 +37,7 @@ class ElFinderTest extends TestCase
     public function testAssetsAndLangParamFromApp()
     {
         Yii::$app->language = 'be-BY';
-        $view = Yii::$app->view;
+        $view = $this->mockView();
 
         $out = $view->renderFile('@alexantr/elfinder/views/elfinder.php', [
             'connectorRoute' => '/elfinder/connector',
@@ -42,11 +50,9 @@ class ElFinderTest extends TestCase
         $this->assertContains('"lang":"ru"', $out); // has lang param
     }
 
-    public function testSpecificLangParams()
+    public function testLangParamJa()
     {
-        $view = Yii::$app->view;
-
-        // ja
+        $view = $this->mockView();
 
         $out = $view->renderFile('@alexantr/elfinder/views/elfinder.php', [
             'connectorRoute' => '/elfinder/connector',
@@ -57,8 +63,11 @@ class ElFinderTest extends TestCase
 
         $this->assertContains('/js/i18n/elfinder.jp.js', $out);
         $this->assertContains('"lang":"jp"', $out);
+    }
 
-        // pt
+    public function testLangParamPt()
+    {
+        $view = $this->mockView();
 
         $out = $view->renderFile('@alexantr/elfinder/views/elfinder.php', [
             'connectorRoute' => '/elfinder/connector',
@@ -69,8 +78,11 @@ class ElFinderTest extends TestCase
 
         $this->assertContains('/js/i18n/elfinder.pt_BR.js', $out);
         $this->assertContains('"lang":"pt_BR"', $out);
+    }
 
-        // ug
+    public function testLangParamUg()
+    {
+        $view = $this->mockView();
 
         $out = $view->renderFile('@alexantr/elfinder/views/elfinder.php', [
             'connectorRoute' => '/elfinder/connector',
@@ -81,8 +93,11 @@ class ElFinderTest extends TestCase
 
         $this->assertContains('/js/i18n/elfinder.ug_CN.js', $out);
         $this->assertContains('"lang":"ug_CN"', $out);
+    }
 
-        // zh
+    public function testLangParamZh()
+    {
+        $view = $this->mockView();
 
         $out = $view->renderFile('@alexantr/elfinder/views/elfinder.php', [
             'connectorRoute' => '/elfinder/connector',
@@ -93,8 +108,11 @@ class ElFinderTest extends TestCase
 
         $this->assertContains('/js/i18n/elfinder.zh_CN.js', $out);
         $this->assertContains('"lang":"zh_CN"', $out);
+    }
 
-        // zh-TW
+    public function testLangParamZhTw()
+    {
+        $view = $this->mockView();
 
         $out = $view->renderFile('@alexantr/elfinder/views/elfinder.php', [
             'connectorRoute' => '/elfinder/connector',
@@ -109,7 +127,7 @@ class ElFinderTest extends TestCase
 
     public function testDisabledLangParam()
     {
-        $view = Yii::$app->view;
+        $view = $this->mockView();
 
         $out = $view->renderFile('@alexantr/elfinder/views/elfinder.php', [
             'connectorRoute' => '/elfinder/connector',

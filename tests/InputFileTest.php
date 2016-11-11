@@ -4,7 +4,6 @@ namespace tests;
 
 use alexantr\elfinder\InputFile;
 use tests\data\models\Post;
-use Yii;
 
 class InputFileTest extends TestCase
 {
@@ -13,8 +12,10 @@ class InputFileTest extends TestCase
      */
     public function testEmptyClientRoute()
     {
+        $view = $this->mockView();
         $model = new Post();
         InputFile::widget([
+            'view' => $view,
             'model' => $model,
             'attribute' => 'image',
         ]);
@@ -22,8 +23,10 @@ class InputFileTest extends TestCase
 
     public function testRenderWithModel()
     {
+        $view = $this->mockView();
         $model = new Post();
         $out = InputFile::widget([
+            'view' => $view,
             'model' => $model,
             'attribute' => 'image',
             'clientRoute' => '/elfinder/index',
@@ -39,7 +42,9 @@ class InputFileTest extends TestCase
 
     public function testRenderWithNameAndValue()
     {
+        $view = $this->mockView();
         $out = InputFile::widget([
+            'view' => $view,
             'id' => 'test',
             'name' => 'test-image-name',
             'value' => 'test-image.jpg',
@@ -56,10 +61,11 @@ class InputFileTest extends TestCase
 
     public function testFilterParam()
     {
-        $view = Yii::$app->view;
+        $view = $this->mockView();
 
         $model = new Post();
         $widget = InputFile::widget([
+            'view' => $view,
             'model' => $model,
             'attribute' => 'image',
             'clientRoute' => '/elfinder/index',
@@ -83,14 +89,13 @@ class InputFileTest extends TestCase
         $this->assertContains($expected, $out);
     }
 
-    public function testMultipleTextarea()
+    public function testMultipleTextareaWithModel()
     {
-        $view = Yii::$app->view;
-
-        // model
+        $view = $this->mockView();
 
         $model = new Post();
         $widget = InputFile::widget([
+            'view' => $view,
             'model' => $model,
             'attribute' => 'image',
             'clientRoute' => '/elfinder/index',
@@ -107,10 +112,14 @@ class InputFileTest extends TestCase
             '<button type="button" id="post-image_button" class="btn btn-default elfinder-btn">Select</button>' .
             '</div>';
         $this->assertContains($expected, $out);
+    }
 
-        // name & value
+    public function testMultipleTextareaWithNameAndValue()
+    {
+        $view = $this->mockView();
 
         $widget = InputFile::widget([
+            'view' => $view,
             'id' => 'test',
             'name' => 'test-image-name',
             'clientRoute' => '/elfinder/index',
@@ -129,17 +138,15 @@ class InputFileTest extends TestCase
         $this->assertContains($expected, $out);
     }
 
-    public function testPreview()
+    public function testPreviewWithModel()
     {
-        $view = Yii::$app->view;
-        $expected = '<div class="help-block elfinder-input-preview"><p>test-image.jpg</p></div>';
-
-        // model
+        $view = $this->mockView();
 
         $model = new Post();
         $model->image = 'test-image.jpg';
 
         $widget = InputFile::widget([
+            'view' => $view,
             'model' => $model,
             'attribute' => 'image',
             'clientRoute' => '/elfinder/index',
@@ -152,11 +159,16 @@ class InputFileTest extends TestCase
             'content' => $widget,
         ]);
 
+        $expected = '<div class="help-block elfinder-input-preview"><p>test-image.jpg</p></div>';
         $this->assertContains($expected, $out);
+    }
 
-        // name & value
+    public function testPreviewWithNameAndValue()
+    {
+        $view = $this->mockView();
 
         $widget = InputFile::widget([
+            'view' => $view,
             'name' => 'test-image-name',
             'value' => 'test-image.jpg',
             'clientRoute' => '/elfinder/index',
@@ -169,6 +181,7 @@ class InputFileTest extends TestCase
             'content' => $widget,
         ]);
 
+        $expected = '<div class="help-block elfinder-input-preview"><p>test-image.jpg</p></div>';
         $this->assertContains($expected, $out);
     }
 }

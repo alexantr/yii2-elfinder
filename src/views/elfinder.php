@@ -30,6 +30,7 @@ $this->beginPage();
 <body>
 <?php $this->beginBody(); ?>
 <?= ElFinder::widget([
+    'view' => $this,
     'connectorRoute' => $connectorRoute,
     'settings' => $settings,
 ]) ?>

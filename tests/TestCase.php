@@ -6,6 +6,8 @@ use Yii;
 use yii\di\Container;
 use yii\helpers\ArrayHelper;
 use yii\helpers\FileHelper;
+use yii\web\AssetManager;
+use yii\web\View;
 
 /**
  * This is the base class for all yii framework unit tests.
@@ -65,11 +67,6 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
                     'cookieValidationKey' => 'wefJDF8sfdsfSDefwqdxj9oq',
                     'scriptFile' => __DIR__ . '/index.php',
                     'scriptUrl' => '/index.php',
-                    'enableCsrfValidation' => false,
-                ],
-                'assetManager' => [
-                    'basePath' => '@tests/data/assets',
-                    'baseUrl' => '/',
                 ],
             ],
         ], $config));
@@ -100,6 +97,29 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
             }
             closedir($handle);
         }
+    }
+
+    /**
+     * Mocks view instance
+     * @return View
+     */
+    protected function mockView()
+    {
+        return new View([
+            'assetManager' => $this->mockAssetManager(),
+        ]);
+    }
+
+    /**
+     * Mocks asset manager
+     * @return AssetManager
+     */
+    protected function mockAssetManager()
+    {
+        return new AssetManager([
+            'basePath' => '@tests/data/assets',
+            'baseUrl' => '/assets',
+        ]);
     }
 
     /**

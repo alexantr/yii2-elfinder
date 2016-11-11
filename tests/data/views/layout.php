@@ -12,7 +12,7 @@
 <body>
 <?php $this->beginBody(); ?>
 
-<?= $content ?>
+<?= isset($content) ? $content : '' ?>
 
 <?php $this->endBody(); ?>
 </body>
