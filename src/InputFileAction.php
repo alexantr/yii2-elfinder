@@ -37,7 +37,7 @@ function (files) {
         urls.push(files[i].url);
     }
     var el = window.opener.document.getElementById("$id");
-    if (el.tagName == "textarea") separator = "\\r\\n";
+    if (el.tagName.toLowerCase() == "textarea") separator = "\\r\\n";
     if (el.value) {
         el.value = el.value + separator + urls.join(separator);
     } else {
