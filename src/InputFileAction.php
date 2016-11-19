@@ -9,7 +9,7 @@ use yii\web\JsExpression;
  * Class InputFileAction
  * @package alexantr\elfinder
  */
-class InputFileAction extends ClientAction
+class InputFileAction extends ClientBaseAction
 {
     /**
      * @inheritdoc

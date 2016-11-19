@@ -6,9 +6,6 @@ use yii\helpers\Html;
 /* @var $connectorRoute string */
 /* @var $settings array */
 
-// disable resize
-$settings['resizable'] = false;
-
 $css = <<<CSSEXP
 html, body { height: 100%; margin: 0; padding: 0; overflow: hidden; }
 body { background: #fff; }

@@ -7,10 +7,10 @@ use yii\base\Action;
 use yii\base\InvalidConfigException;
 
 /**
- * Class ClientAction
+ * Class ClientBaseAction
  * @package alexantr\elfinder
  */
-class ClientAction extends Action
+class ClientBaseAction extends Action
 {
     /**
      * @var string A route to connector action
@@ -43,6 +43,9 @@ class ClientAction extends Action
         if (!empty($filter)) {
             $this->settings['onlyMimes'] = (array)$filter;
         }
+
+        // disable resize in popup window
+        $this->settings['resizable'] = false;
 
         return $this->controller->renderFile('@alexantr/elfinder/views/elfinder.php', [
             'connectorRoute' => $this->connectorRoute,

@@ -8,7 +8,7 @@ use yii\web\JsExpression;
  * Class CKEditorAction
  * @package alexantr\elfinder
  */
-class CKEditorAction extends ClientAction
+class CKEditorAction extends ClientBaseAction
 {
     /**
      * @inheritdoc
