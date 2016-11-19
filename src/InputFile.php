@@ -29,19 +29,29 @@ class InputFile extends InputWidget
     public $multiple = false;
 
     /**
-     * @var string Separator for multiple paths in input
-     */
-    public $multipleSeparator = ', ';
-
-    /**
      * @var string Use textarea for multiple paths
      */
-    public $useTextarea = false;
+    public $textarea = false;
 
     /**
      * @inheritdoc
      */
-    public $options = ['class' => 'form-control elfinder-form-control'];
+    public $options = ['class' => 'form-control'];
+
+    /**
+     * @var string Input template
+     */
+    public $template = '<div class="input-group">{input}<span class="input-group-btn">{button}</span></div>{preview}';
+
+    /**
+     * @var string Input template
+     */
+    public $textareaTemplate = '{input}<div class="help-block">{button}</div>{preview}';
+
+    /**
+     * @var string Preview template
+     */
+    public $previewTemplate = '<div class="help-block elfinder-input-preview">{preview}</div>';
 
     /**
      * @var string Browse button html tag
@@ -56,22 +66,7 @@ class InputFile extends InputWidget
     /**
      * @var array Browse button options
      */
-    public $buttonOptions = ['class' => 'btn btn-default elfinder-btn'];
-
-    /**
-     * @var string Input template
-     */
-    public $template = '<div class="input-group elfinder-input-group">{input}<span class="input-group-btn">{button}</span></div>{preview}';
-
-    /**
-     * @var string Preview template
-     */
-    public $previewTemplate = '<div class="help-block elfinder-input-preview">{preview}</div>';
-
-    /**
-     * @var string Input template
-     */
-    public $textareaTemplate = '{input}<div class="help-block">{button}</div>{preview}';
+    public $buttonOptions = ['class' => 'btn btn-default'];
 
     /**
      * @var callable Custom callable function which showing preview
@@ -104,10 +99,7 @@ class InputFile extends InputWidget
             $route['filter'] = $this->filter;
         }
         if ($this->multiple) {
-            if ($this->useTextarea) {
-                $this->multipleSeparator = 'EOL';
-            }
-            $route['multiple'] = base64_encode($this->multipleSeparator);
+            $route['multiple'] = 1;
         }
 
         $this->url = Url::toRoute($route);
@@ -118,22 +110,22 @@ class InputFile extends InputWidget
      */
     public function run()
     {
-        if ($this->multiple && $this->useTextarea && !isset($this->options['rows'])) {
+        if ($this->multiple && $this->textarea && !isset($this->options['rows'])) {
             $this->options['rows'] = 5;
         }
-        if ($this->multiple && $this->useTextarea) {
+        if ($this->multiple && $this->textarea) {
             $this->template = $this->textareaTemplate;
         }
 
         $replace = [];
         if ($this->hasModel()) {
-            if ($this->multiple && $this->useTextarea) {
+            if ($this->multiple && $this->textarea) {
                 $replace['{input}'] = Html::activeTextarea($this->model, $this->attribute, $this->options);
             } else {
                 $replace['{input}'] = Html::activeTextInput($this->model, $this->attribute, $this->options);
             }
         } else {
-            if ($this->multiple && $this->useTextarea) {
+            if ($this->multiple && $this->textarea) {
                 $replace['{input}'] = Html::textarea($this->name, $this->value, $this->options);
             } else {
                 $replace['{input}'] = Html::textInput($this->name, $this->value, $this->options);
@@ -155,18 +147,15 @@ class InputFile extends InputWidget
             }
         }
 
-        $url_enc = Html::encode($this->url);
-        $button_id_enc = Html::encode($this->buttonOptions['id']);
-        $id_enc = Html::encode($this->options['id']);
         $js = <<<JSEXP
-jQuery(document).on('click', '#$button_id_enc', function (e) {
+jQuery(document).on('click', '#{$this->buttonOptions['id']}', function (e) {
     e.preventDefault();
     var w = screen.width / 1.5;
     var h = screen.height / 1.5;
     if (w < 900 && screen.width > 960) w = 900;
     if (h < 600 && screen.height > 660) h = 600;
     var params = 'menubar=no,toolbar=no,location=no,directories=no,status=no,fullscreen=no,width=' + w + ',height=' + h;
-    var win = window.open('$url_enc', 'elfinder_$id_enc', params);
+    var win = window.open('{$this->url}', 'elfinder_{$this->options['id']}', params);
     win.focus();
 });
 JSEXP;

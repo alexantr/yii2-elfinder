@@ -31,10 +31,10 @@ class InputFileTest extends TestCase
             'attribute' => 'image',
             'clientRoute' => '/elfinder/index',
         ]);
-        $expected = '<div class="input-group elfinder-input-group">' .
-            '<input type="text" id="post-image" class="form-control elfinder-form-control" name="Post[image]">' .
+        $expected = '<div class="input-group">' .
+            '<input type="text" id="post-image" class="form-control" name="Post[image]">' .
             '<span class="input-group-btn">' .
-            '<button type="button" id="post-image_button" class="btn btn-default elfinder-btn">Select</button>' .
+            '<button type="button" id="post-image_button" class="btn btn-default">Select</button>' .
             '</span></div>';
 
         $this->assertEqualsWithoutLE($expected, $out);
@@ -50,10 +50,10 @@ class InputFileTest extends TestCase
             'value' => 'test-image.jpg',
             'clientRoute' => '/elfinder/index',
         ]);
-        $expected = '<div class="input-group elfinder-input-group">' .
-            '<input type="text" id="test" class="form-control elfinder-form-control" name="test-image-name" value="test-image.jpg">' .
+        $expected = '<div class="input-group">' .
+            '<input type="text" id="test" class="form-control" name="test-image-name" value="test-image.jpg">' .
             '<span class="input-group-btn">' .
-            '<button type="button" id="test_button" class="btn btn-default elfinder-btn">Select</button>' .
+            '<button type="button" id="test_button" class="btn btn-default">Select</button>' .
             '</span></div>';
 
         $this->assertEqualsWithoutLE($expected, $out);
@@ -83,7 +83,7 @@ class InputFileTest extends TestCase
     if (w < 900 && screen.width > 960) w = 900;
     if (h < 600 && screen.height > 660) h = 600;
     var params = 'menubar=no,toolbar=no,location=no,directories=no,status=no,fullscreen=no,width=' + w + ',height=' + h;
-    var win = window.open('/index.php?r=elfinder%2Findex&amp;id=post-image&amp;filter%5B0%5D=image', 'elfinder_post-image', params);
+    var win = window.open('/index.php?r=elfinder%2Findex&id=post-image&filter%5B0%5D=image', 'elfinder_post-image', params);
     win.focus();
 });";
         $this->assertContains($expected, $out);
@@ -100,16 +100,16 @@ class InputFileTest extends TestCase
             'attribute' => 'image',
             'clientRoute' => '/elfinder/index',
             'multiple' => true,
-            'useTextarea' => true,
+            'textarea' => true,
         ]);
 
         $out = $view->renderFile('@tests/data/views/layout.php', [
             'content' => $widget,
         ]);
 
-        $expected = '<textarea id="post-image" class="form-control elfinder-form-control" name="Post[image]" rows="5"></textarea>' .
+        $expected = '<textarea id="post-image" class="form-control" name="Post[image]" rows="5"></textarea>' .
             '<div class="help-block">' .
-            '<button type="button" id="post-image_button" class="btn btn-default elfinder-btn">Select</button>' .
+            '<button type="button" id="post-image_button" class="btn btn-default">Select</button>' .
             '</div>';
         $this->assertContains($expected, $out);
     }
@@ -124,16 +124,17 @@ class InputFileTest extends TestCase
             'name' => 'test-image-name',
             'clientRoute' => '/elfinder/index',
             'multiple' => true,
-            'useTextarea' => true,
+            'textarea' => true,
+            'options' => ['class' => 'form-control', 'rows' => 3],
         ]);
 
         $out = $view->renderFile('@tests/data/views/layout.php', [
             'content' => $widget,
         ]);
 
-        $expected = '<textarea id="test" class="form-control elfinder-form-control" name="test-image-name" rows="5"></textarea>' .
+        $expected = '<textarea id="test" class="form-control" name="test-image-name" rows="3"></textarea>' .
             '<div class="help-block">' .
-            '<button type="button" id="test_button" class="btn btn-default elfinder-btn">Select</button>' .
+            '<button type="button" id="test_button" class="btn btn-default">Select</button>' .
             '</div>';
         $this->assertContains($expected, $out);
     }

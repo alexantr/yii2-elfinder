@@ -3,6 +3,7 @@
 namespace alexantr\elfinder;
 
 use Yii;
+use yii\helpers\Html;
 use yii\web\JsExpression;
 
 /**
@@ -12,31 +13,35 @@ use yii\web\JsExpression;
 class InputFileAction extends ClientBaseAction
 {
     /**
+     * @var string Separator for multiple paths in input
+     */
+    public $multipleSeparator = ', ';
+
+    /**
      * @inheritdoc
      */
     public function run()
     {
         $id = Yii::$app->request->getQueryParam('id');
+        $id = Html::encode($id);
+
         $multiple = Yii::$app->request->getQueryParam('multiple');
 
         if (!empty($multiple)) {
-            $multiple = base64_decode($multiple);
-            if (in_array($multiple, ["\r", "\n", "\r\n", 'EOL'])) {
-                $multiple = '\r\n';
-            }
             $this->settings['commandsOptions']['getfile']['multiple'] = true;
+            $separator = $this->multipleSeparator;
             $callback = <<<JSEXP
 function (files) {
-    var urls = [];
+    var urls = [], separator = "$separator";
     for (var i in files) {
         urls.push(files[i].url);
     }
-    var value = urls.join("{$multiple}");
-    var el = window.opener.document.getElementById("{$id}");
+    var el = window.opener.document.getElementById("$id");
+    if (el.tagName == "") separator = "\\r\\n";
     if (el.value) {
-        el.value = el.value + "{$multiple}" + value;
+        el.value = el.value + separator + urls.join(separator);
     } else {
-        el.value = value;
+        el.value = urls.join(separator);
     }
     window.close();
 }
@@ -44,8 +49,7 @@ JSEXP;
         } else {
             $callback = <<<JSEXP
 function (file) {
-    var value = file.url;
-    window.opener.document.getElementById("{$id}").value = value;
+    window.opener.document.getElementById("$id").value = file.url;
     window.close();
 }
 JSEXP;
