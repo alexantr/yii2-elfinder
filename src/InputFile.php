@@ -110,22 +110,22 @@ class InputFile extends InputWidget
      */
     public function run()
     {
-        if ($this->multiple && $this->textarea && !isset($this->options['rows'])) {
+        if ($this->textarea && !isset($this->options['rows'])) {
             $this->options['rows'] = 5;
         }
-        if ($this->multiple && $this->textarea) {
+        if ($this->textarea) {
             $this->template = $this->textareaTemplate;
         }
 
         $replace = [];
         if ($this->hasModel()) {
-            if ($this->multiple && $this->textarea) {
+            if ($this->textarea) {
                 $replace['{input}'] = Html::activeTextarea($this->model, $this->attribute, $this->options);
             } else {
                 $replace['{input}'] = Html::activeTextInput($this->model, $this->attribute, $this->options);
             }
         } else {
-            if ($this->multiple && $this->textarea) {
+            if ($this->textarea) {
                 $replace['{input}'] = Html::textarea($this->name, $this->value, $this->options);
             } else {
                 $replace['{input}'] = Html::textInput($this->name, $this->value, $this->options);
@@ -150,8 +150,7 @@ class InputFile extends InputWidget
         $js = <<<JSEXP
 jQuery(document).on('click', '#{$this->buttonOptions['id']}', function (e) {
     e.preventDefault();
-    var w = screen.width / 1.5;
-    var h = screen.height / 1.5;
+    var w = screen.width / 1.5, h = screen.height / 1.5;
     if (w < 900 && screen.width > 960) w = 900;
     if (h < 600 && screen.height > 660) h = 600;
     var params = 'menubar=no,toolbar=no,location=no,directories=no,status=no,fullscreen=no,width=' + w + ',height=' + h;

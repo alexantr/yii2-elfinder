@@ -13,9 +13,14 @@ use yii\web\JsExpression;
 class InputFileAction extends ClientBaseAction
 {
     /**
-     * @var string Separator for multiple paths in input
+     * @var string Separator for multiple paths in text input
      */
-    public $multipleSeparator = ', ';
+    public $separator = ', ';
+
+    /**
+     * @var string Separator for multiple paths in textarea
+     */
+    public $textareaSeparator = '\n';
 
     /**
      * @inheritdoc
@@ -29,15 +34,14 @@ class InputFileAction extends ClientBaseAction
 
         if (!empty($multiple)) {
             $this->settings['commandsOptions']['getfile']['multiple'] = true;
-            $separator = $this->multipleSeparator;
             $callback = <<<JSEXP
 function (files) {
-    var urls = [], separator = "$separator";
+    var urls = [], separator = "{$this->separator}";
     for (var i in files) {
         urls.push(files[i].url);
     }
     var el = window.opener.document.getElementById("$id");
-    if (el.tagName.toLowerCase() == "textarea") separator = "\\r\\n";
+    if (el.tagName.toLowerCase() == "textarea") separator = "{$this->textareaSeparator}";
     if (el.value) {
         el.value = el.value + separator + urls.join(separator);
     } else {
