@@ -15,7 +15,7 @@ class InputFileAction extends ClientBaseAction
     /**
      * @var string Separator for multiple paths in text input
      */
-    public $separator = ', ';
+    public $separator = ',';
 
     /**
      * @var string Separator for multiple paths in textarea
