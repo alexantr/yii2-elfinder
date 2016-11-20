@@ -18,7 +18,10 @@ composer require alexantr/yii2-elfinder
 
 ## Usage
 
-Example of controller:
+### Configure connectors
+
+For using elFinder you must create and configure controller.
+See full example with actions for elFinder's connector, InputFile widget and CKEditor file browser:
 
 ```php
 <?php
@@ -58,33 +61,109 @@ class ElfinderController extends Controller
                     ],
                 ],
             ],
-            // for input file widget
             'input' => [
                 'class' => InputFileAction::className(),
                 'connectorRoute' => 'connector',
             ],
-            // for CKEditor widget params
             'ckeditor' => [
                 'class' => CKEditorAction::className(),
                 'connectorRoute' => 'connector',
             ],
         ];
     }
+}
+```
 
-    /**
-     * Standalone file manager
-     * @return string
-     */
-    public function actionIndex()
+### InputFile widget
+
+InputFile widget with preview:
+
+```php
+<?= alexantr\elfinder\InputFile::widget([
+    'name' => 'attributeName',
+    'clientRoute' => 'elfinder/input',
+    'filter' => ['image'], // enables elFinder's onlyMimes option
+    'preview' => function ($value) {
+        return yii\helpers\Html::img($value, ['width' => 200]);
+    },
+]) ?>
+```
+
+*Note:* Preview shows only predefined value and not updating on the fly after new select.
+
+Using textarea instead text input (can be useful with enabled multiple selection):
+
+```php
+<?= alexantr\elfinder\InputFile::widget([
+    'name' => 'attributeName',
+    'clientRoute' => 'elfinder/input',
+    'textarea' => true,
+]) ?>
+```
+
+Enable multiple selection:
+
+```php
+<?= alexantr\elfinder\InputFile::widget([
+    'name' => 'attributeName',
+    'clientRoute' => 'elfinder/input',
+    'multiple' => true,
+]) ?>
+```
+
+Default paths separator for text input is comma and newline character for textarea.
+You can change them in `InputFileAction` configuration:
+
+```php
+class ElfinderController extends Controller
+{
+    public function actions()
     {
-        return $this->render('index', [
+        return [
+            // ...
+            'input' => [
+                'class' => InputFileAction::className(),
+                'connectorRoute' => 'connector',
+                'separator' => ',',
+                'textareaSeparator' => '\n', // newline character in javascript
+            ],
+            // ...
+        ];
+    }
+}
+```
+
+### Integration with CKEditor
+
+Set params for [CKEditor widget](https://github.com/alexantr/yii2-ckeditor):
+
+```php
+<?= alexantr\ckeditor\CKEditor::widget([
+    'name' => 'attributeName',
+    'clientOptions' => [
+        'filebrowserBrowseUrl' => yii\helpers\Url::to(['elfinder/ckeditor']),
+        'filebrowserImageBrowseUrl' => yii\helpers\Url::to(['elfinder/ckeditor', 'filter' => 'image']),
+    ],
+]) ?>
+```
+
+### Standalone file manager
+
+Create action in any controller:
+
+```php
+class DefaultController extends Controller
+{
+    public function actionManager()
+    {
+        return $this->render('manager', [
             'connectorRoute' => 'connector',
         ]);
     }
 }
 ```
 
-View file for standalone file manager:
+and view file for it:
 
 ```php
 <?php
@@ -95,7 +174,7 @@ View file for standalone file manager:
 // https://github.com/twbs/bootstrap/issues/6094
 $this->registerJs('jQuery.fn.btn = jQuery.fn.button.noConflict();');
 
-$this->title = Yii::t('app', 'File Manager');
+$this->title = 'File Manager';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -104,30 +183,5 @@ $this->params['breadcrumbs'][] = $this->title;
     'settings' => [
         'height' => 640,
     ],
-]) ?>
-```
-
-Set params for [CKEditor widget](https://github.com/alexantr/yii2-ckeditor):
-
-```php
-<?= CKEditor::widget([
-    'name' => 'attributeName',
-    'clientOptions' => [
-        'filebrowserBrowseUrl' => yii\helpers\Url::to(['elfinder/ckeditor']),
-        'filebrowserImageBrowseUrl' => yii\helpers\Url::to(['elfinder/ckeditor', 'filter' => 'image']),
-    ],
-]) ?>
-```
-
-Input file widget:
-
-```php
-<?= $form->field($model, 'image')->widget(alexantr\elfinder\InputFile::className(), [
-    'clientRoute' => 'elfinder/input',
-    'filter' => ['image'],
-    'buttonText' => Yii::t('app', 'Select'),
-    'preview' => function ($value) {
-        return yii\helpers\Html::img($value, ['width' => 200]);
-    },
 ]) ?>
 ```
