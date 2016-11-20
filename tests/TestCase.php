@@ -133,4 +133,16 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
         $actual = str_replace("\r\n", "\n", $actual);
         $this->assertEquals($expected, $actual);
     }
+
+    /**
+     * Asserts that a haystack contains a needle ignoring line endings
+     * @param string $expected
+     * @param string $actual
+     */
+    public function assertContainsWithoutLE($expected, $actual)
+    {
+        $expected = str_replace("\r\n", "\n", $expected);
+        $actual = str_replace("\r\n", "\n", $actual);
+        $this->assertContains($expected, $actual);
+    }
 }
