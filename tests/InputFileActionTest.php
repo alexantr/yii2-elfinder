@@ -48,7 +48,7 @@ class InputFileActionTest extends TestCase
         $out = Yii::$app->runAction('elfinder/input');
 
         $expected = '"getFileCallback":function (files) {' . "\n" .
-            '    var urls = [], separator = ", ";' . "\n" .
+            '    var urls = [], separator = ",";' . "\n" .
             '    for (var i in files) {' . "\n" .
             '        urls.push(files[i].url);' . "\n" .
             '    }' . "\n" .
