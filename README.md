@@ -21,7 +21,7 @@ composer require alexantr/yii2-elfinder
 ### Configure actions
 
 For using elFinder you must create and configure controller. Full example with actions for elFinder's connector,
-`InputFile` widget, CKEditor `filebrowser*` and TinyMCE `file_picker_callback`:
+`InputFile` widget, CKEditor `filebrowser*` params and TinyMCE `file_picker_callback` param:
 
 ```php
 <?php
@@ -165,13 +165,19 @@ For using elFinder with TinyMCE 4 widget (like [this one](https://github.com/2am
 specify param `file_picker_callback`:
 
 ```php
-<?= alexantr\ckeditor\CKEditor::widget([
+<?= dosamigos\tinymce\TinyMce::widget([
     'name' => 'attributeName',
     'clientOptions' => [
         // ...
         'file_picker_callback' => alexantr\elfinder\TinyMCE::getFilePickerCallback(['elfinder/tinymce']),
     ],
 ]) ?>
+```
+
+With second param in `getFilePickerCallback()` you can set additional `tinymce.WindowManager.open` settings:
+
+```php
+TinyMCE::getFilePickerCallback(['elfinder/tinymce'], ['width' => 1200, 'height' => 600])
 ```
 
 ### Standalone file manager

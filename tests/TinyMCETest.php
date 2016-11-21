@@ -8,15 +8,10 @@ class TinyMCETest extends TestCase
 {
     public function testTinyMCEFilePickerCallback()
     {
-        $out = TinyMCE::getFilePickerCallback(['/elfinder/tinymce'], 1000, 600);
+        $out = TinyMCE::getFilePickerCallback(['/elfinder/tinymce'], ['width' => 1000, 'height' => 600]);
 
         $expected = 'function (callback, value, meta) {
-    tinymce.activeEditor.windowManager.open({
-        file: "/index.php?r=elfinder%2Ftinymce",
-        title: "elFinder 2.1",
-        width: 1000,
-        height: 600
-    }, {
+    tinymce.activeEditor.windowManager.open({"title":"elFinder 2.1","width":1000,"height":600,"file":"/index.php?r=elfinder%2Ftinymce"}, {
         oninsert: function (file, fm) {
             var url = file.url, reg = /\/[^/]+?\/\.\.\//;
             while(url.match(reg)) {

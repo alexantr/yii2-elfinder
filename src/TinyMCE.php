@@ -2,6 +2,7 @@
 
 namespace alexantr\elfinder;
 
+use yii\helpers\Json;
 use yii\helpers\Url;
 use yii\web\JsExpression;
 
@@ -10,21 +11,24 @@ class TinyMCE
     /**
      * Callback for TinyMCE 4 file_picker_callback
      * @param array|string $url Url to TinyMCEAction
-     * @param int $width Pupup width
-     * @param int $height Popup height
+     * @param array $popupSettings TinyMCE popup settings
      * @return JsExpression
      */
-    public static function getFilePickerCallback($url, $width = 900, $height = 500)
+    public static function getFilePickerCallback($url, $popupSettings = [])
     {
-        $url = Url::to($url);
+        $default = [
+            'title' => 'elFinder 2.1',
+            'width' => 900,
+            'height' => 500,
+        ];
+
+        $settings = array_merge($default, $popupSettings);
+        $settings['file'] = Url::to($url);
+        $encodedSettings = Json::encode($settings);
+
         $callback = <<<JSEXP
 function (callback, value, meta) {
-    tinymce.activeEditor.windowManager.open({
-        file: "$url",
-        title: "elFinder 2.1",
-        width: $width,
-        height: $height
-    }, {
+    tinymce.activeEditor.windowManager.open($encodedSettings, {
         oninsert: function (file, fm) {
             var url = file.url, reg = /\/[^/]+?\/\.\.\//;
             while(url.match(reg)) {
