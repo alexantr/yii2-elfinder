@@ -20,8 +20,8 @@ composer require alexantr/yii2-elfinder
 
 ### Configure actions
 
-For using elFinder you must create and configure controller.
-Full example with actions for elFinder's connector, `InputFile` widget and CKEditor filebrowser params:
+For using elFinder you must create and configure controller. Full example with actions for elFinder's connector,
+`InputFile` widget, CKEditor `filebrowser*` and TinyMCE `file_picker_callback`:
 
 ```php
 <?php
@@ -30,6 +30,7 @@ namespace app\controllers;
 use alexantr\elfinder\CKEditorAction;
 use alexantr\elfinder\ConnectorAction;
 use alexantr\elfinder\InputFileAction;
+use alexantr\elfinder\TinyMCEAction;
 use Yii;
 use yii\web\Controller;
 
@@ -64,6 +65,10 @@ class ElfinderController extends Controller
             ],
             'ckeditor' => [
                 'class' => CKEditorAction::className(),
+                'connectorRoute' => 'connector',
+            ],
+            'tinymce' => [
+                'class' => TinyMCEAction::className(),
                 'connectorRoute' => 'connector',
             ],
         ];
@@ -145,6 +150,7 @@ specify params `filebrowserBrowseUrl` and (or) `filebrowserImageBrowseUrl`:
 <?= alexantr\ckeditor\CKEditor::widget([
     'name' => 'attributeName',
     'clientOptions' => [
+        // ...
         'filebrowserBrowseUrl' => yii\helpers\Url::to(['elfinder/ckeditor']),
         'filebrowserImageBrowseUrl' => yii\helpers\Url::to(['elfinder/ckeditor', 'filter' => 'image']),
     ],
@@ -152,6 +158,21 @@ specify params `filebrowserBrowseUrl` and (or) `filebrowserImageBrowseUrl`:
 ```
 
 *Note:* For `filebrowserImageBrowseUrl` we use filter query param to display only images.
+
+### Integration with TinyMCE 4
+
+For using elFinder with TinyMCE 4 widget (like [this one](https://github.com/2amigos/yii2-tinymce-widget)) you need to
+specify param `file_picker_callback`:
+
+```php
+<?= alexantr\ckeditor\CKEditor::widget([
+    'name' => 'attributeName',
+    'clientOptions' => [
+        // ...
+        'file_picker_callback' => alexantr\elfinder\TinyMCE::getFilePickerCallback(['elfinder/tinymce']),
+    ],
+]) ?>
+```
 
 ### Standalone file manager
 
@@ -196,5 +217,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ## Links
 
 * [elFinder Wiki](https://github.com/Studio-42/elFinder/wiki)
-* [CKEditor widget](https://github.com/alexantr/yii2-ckeditor) for Yii 2
+* [CKEditor widget](https://github.com/alexantr/yii2-ckeditor) by [alexantr](https://github.com/alexantr)
+* [CKEditor widget](https://github.com/2amigos/yii2-ckeditor-widget) by [2amigos](https://github.com/2amigos)
+* [TinyMCE widget](https://github.com/2amigos/yii2-tinymce-widget) by [2amigos](https://github.com/2amigos)
 * [Yii framework site](http://www.yiiframework.com)

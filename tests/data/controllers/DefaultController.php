@@ -6,6 +6,7 @@ use alexantr\elfinder\CKEditorAction;
 use alexantr\elfinder\ClientBaseAction;
 use alexantr\elfinder\ConnectorAction;
 use alexantr\elfinder\InputFileAction;
+use alexantr\elfinder\TinyMCEAction;
 use yii\web\Controller;
 
 class DefaultController extends Controller
@@ -26,6 +27,10 @@ class DefaultController extends Controller
             ],
             'ckeditor' => [
                 'class' => CKEditorAction::className(),
+                'connectorRoute' => 'connector',
+            ],
+            'tinymce' => [
+                'class' => TinyMCEAction::className(),
                 'connectorRoute' => 'connector',
             ],
             'invalid' => [
