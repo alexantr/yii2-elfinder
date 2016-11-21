@@ -1,6 +1,6 @@
 # elFinder file manager for Yii 2
 
-This extension integrates an [elFinder](http://studio-42.github.io/elFinder/) file manager into
+This extension integrates an [elFinder 2.1](http://studio-42.github.io/elFinder/) file manager into
 [Yii framework 2.0](http://www.yiiframework.com).
 
 [![Latest Stable Version](https://poser.pugx.org/alexantr/yii2-elfinder/v/stable)](https://packagist.org/packages/alexantr/yii2-elfinder)
@@ -18,10 +18,10 @@ composer require alexantr/yii2-elfinder
 
 ## Usage
 
-### Configure connectors
+### Configure actions
 
 For using elFinder you must create and configure controller.
-See full example with actions for elFinder's connector, InputFile widget and CKEditor file browser:
+Full example with actions for elFinder's connector, `InputFile` widget and CKEditor filebrowser params:
 
 ```php
 <?php
@@ -35,9 +35,6 @@ use yii\web\Controller;
 
 class ElfinderController extends Controller
 {
-    /**
-     * @inheritdoc
-     */
     public function actions()
     {
         return [
@@ -74,22 +71,28 @@ class ElfinderController extends Controller
 }
 ```
 
+Reed [elFinder docs](https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1) to configure
+connector options.
+
 ### InputFile widget
 
-InputFile widget with preview:
+Example of `InputFile` widget with enabled mime filter and preview:
 
 ```php
 <?= alexantr\elfinder\InputFile::widget([
     'name' => 'attributeName',
     'clientRoute' => 'elfinder/input',
-    'filter' => ['image'], // enables elFinder's onlyMimes option
+    'filter' => ['image'],
     'preview' => function ($value) {
         return yii\helpers\Html::img($value, ['width' => 200]);
     },
 ]) ?>
 ```
 
-*Note:* Preview shows only predefined value and not updating on the fly after new select.
+*Note 1:* Filter param is using to display only certain files based on their mime type. Check `onlyMimes` option
+in [elFinder docs](https://github.com/Studio-42/elFinder/wiki/Client-configuration-options-2.1#onlyMimes).
+
+*Note 2:* Preview displays only predefined (saved earlier) input value and not updating on the fly after new selection.
 
 Using textarea instead text input (can be useful with enabled multiple selection):
 
@@ -101,7 +104,7 @@ Using textarea instead text input (can be useful with enabled multiple selection
 ]) ?>
 ```
 
-Enable multiple selection:
+Enable multiple selection to select more then one file in one input:
 
 ```php
 <?= alexantr\elfinder\InputFile::widget([
@@ -135,7 +138,8 @@ class ElfinderController extends Controller
 
 ### Integration with CKEditor
 
-Set params for [CKEditor widget](https://github.com/alexantr/yii2-ckeditor):
+For using elFinder with CKEditor widget (like [this one](https://github.com/alexantr/yii2-ckeditor)) you need to
+specify params `filebrowserBrowseUrl` and (or) `filebrowserImageBrowseUrl`:
 
 ```php
 <?= alexantr\ckeditor\CKEditor::widget([
@@ -146,6 +150,8 @@ Set params for [CKEditor widget](https://github.com/alexantr/yii2-ckeditor):
     ],
 ]) ?>
 ```
+
+*Note:* For `filebrowserImageBrowseUrl` we use filter query param to display only images.
 
 ### Standalone file manager
 
@@ -172,6 +178,7 @@ and view file for it:
 
 // Conflict between bootstrap-button.js and jQuery UI
 // https://github.com/twbs/bootstrap/issues/6094
+// Add this script if you are using Bootstrap 3
 $this->registerJs('jQuery.fn.btn = jQuery.fn.button.noConflict();');
 
 $this->title = 'File Manager';
@@ -185,3 +192,9 @@ $this->params['breadcrumbs'][] = $this->title;
     ],
 ]) ?>
 ```
+
+## Links
+
+* [elFinder Wiki](https://github.com/Studio-42/elFinder/wiki)
+* [CKEditor widget](https://github.com/alexantr/yii2-ckeditor) for Yii 2
+* [Yii framework site](http://www.yiiframework.com)
