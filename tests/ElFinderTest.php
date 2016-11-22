@@ -139,4 +139,22 @@ class ElFinderTest extends TestCase
         $this->assertNotContains('/js/i18n/elfinder', $out); // no lang file
         $this->assertNotContains('"lang":', $out); // no lang param
     }
+
+    public function testButtonNoConflictEnabled()
+    {
+        $view = $this->mockView();
+
+        $content = ElFinder::widget([
+            'view' => $view,
+            'id' => 'test',
+            'connectorRoute' => '/elfinder/connector',
+            'buttonNoConflict' => true,
+        ]);
+
+        $out = $view->renderFile('@tests/data/views/layout.php', [
+            'content' => $content,
+        ]);
+
+        $this->assertContains('jQuery.fn.btn = jQuery.fn.button.noConflict();', $out);
+    }
 }

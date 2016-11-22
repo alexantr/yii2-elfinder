@@ -27,6 +27,12 @@ class ElFinder extends Widget
     public $settings = [];
 
     /**
+     * @var bool Resolves conflict between Bootstrab 3 btn and jQuery UI btn. Enable if using widget on page with BS3
+     * @see https://github.com/twbs/bootstrap/issues/6094
+     */
+    public $buttonNoConflict = false;
+
+    /**
      * @inheritdoc
      */
     public function init()
@@ -56,6 +62,11 @@ class ElFinder extends Widget
         $id = $this->getId();
 
         $view = $this->getView();
+
+        if ($this->buttonNoConflict) {
+            $view->registerJs('jQuery.fn.btn = jQuery.fn.button.noConflict();');
+        }
+
         $bundle = ElFinderAsset::register($view);
 
         if (isset($this->settings['lang'])) {

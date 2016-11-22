@@ -20,7 +20,7 @@ composer require alexantr/yii2-elfinder
 
 ### Configure actions
 
-For using elFinder you must create and configure controller. Full example with actions for elFinder's connector,
+For using elFinder you must create and configure controller. See complete example with actions for elFinder's connector,
 `InputFile` widget, CKEditor `filebrowser*` params and TinyMCE `file_picker_callback` param:
 
 ```php
@@ -182,43 +182,20 @@ TinyMCE::getFilePickerCallback(['elfinder/tinymce'], ['width' => 1200, 'height' 
 
 ### Standalone file manager
 
-Create action in any controller:
+Add `ElFinder` widget to any view:
 
 ```php
-class DefaultController extends Controller
-{
-    public function actionManager()
-    {
-        return $this->render('manager', [
-            'connectorRoute' => 'connector',
-        ]);
-    }
-}
-```
-
-and view file for it:
-
-```php
-<?php
-/* @var $this \yii\web\View */
-/* @var $connectorRoute string */
-
-// Conflict between bootstrap-button.js and jQuery UI
-// https://github.com/twbs/bootstrap/issues/6094
-// Add this script if you are using Bootstrap 3
-$this->registerJs('jQuery.fn.btn = jQuery.fn.button.noConflict();');
-
-$this->title = 'File Manager';
-$this->params['breadcrumbs'][] = $this->title;
-?>
-
 <?= alexantr\elfinder\ElFinder::widget([
-    'connectorRoute' => $connectorRoute,
+    'connectorRoute' => ['elfinder/connector'],
     'settings' => [
         'height' => 640,
     ],
+    'buttonNoConflict' => true,
 ]) ?>
 ```
+
+*Note:* If you are using Bootstrap 3 enable `buttonNoConflict` option to resolve conflict between
+Bootstrap and jQuery UI buttons.
 
 ## Links
 
