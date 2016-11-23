@@ -112,6 +112,25 @@ class InputFileTest extends TestCase
         $this->assertEqualsWithoutLE($expected, $out);
     }
 
+    public function testRextareaRowsParam()
+    {
+        $view = $this->mockView();
+        $out = InputFile::widget([
+            'view' => $view,
+            'id' => 'test',
+            'name' => 'test-image-name',
+            'clientRoute' => '/elfinder/index',
+            'textarea' => true,
+            'textareaRows' => 7,
+        ]);
+        $expected = '<textarea id="test" class="form-control" name="test-image-name" rows="7"></textarea>' .
+            '<div class="help-block">' .
+            '<button type="button" id="test_button" class="btn btn-default">Select</button>' .
+            '</div>';
+
+        $this->assertEqualsWithoutLE($expected, $out);
+    }
+
     public function testFilterParam()
     {
         $view = $this->mockView();

@@ -115,6 +115,7 @@ Using textarea instead text input (can be useful with enabled multiple selection
     'name' => 'attributeName',
     'clientRoute' => 'elfinder/input',
     'textarea' => true,
+    'textareaRows' => 3, // default is 5
 ]) ?>
 ```
 

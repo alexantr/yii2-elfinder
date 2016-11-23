@@ -69,6 +69,11 @@ class InputFile extends InputWidget
     public $buttonOptions = ['class' => 'btn btn-default'];
 
     /**
+     * @var int Default value in "rows" attribute for textarea
+     */
+    public $textareaRows = 5;
+
+    /**
      * @var callable Custom callable function which showing preview
      */
     public $preview;
@@ -110,11 +115,11 @@ class InputFile extends InputWidget
      */
     public function run()
     {
-        if ($this->textarea && !isset($this->options['rows'])) {
-            $this->options['rows'] = 5;
-        }
         if ($this->textarea) {
             $this->template = $this->textareaTemplate;
+            if (!isset($this->options['rows'])) {
+                $this->options['rows'] = $this->textareaRows;
+            }
         }
 
         $replace = [];
