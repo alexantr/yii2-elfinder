@@ -11,21 +11,11 @@ class TinyMCETest extends TestCase
         $out = TinyMCE::getFilePickerCallback(['/elfinder/tinymce'], ['width' => 1000, 'height' => 600]);
 
         $expected = 'function (callback, value, meta) {
-    tinymce.activeEditor.windowManager.open({"title":"elFinder 2.1","width":1000,"height":600,"file":"/index.php?r=elfinder%2Ftinymce"}, {
-        oninsert: function (file, fm) {
+    tinymce.activeEditor.windowManager.open({"title":"elFinder","width":1000,"height":600,"file":"/index.php?r=elfinder%2Ftinymce"}, {
+        oninsert: function (file) {
             var url = file.url, reg = /\/[^/]+?\/\.\.\//;
-            while(url.match(reg)) {
-                url = url.replace(reg, \'/\');
-            }
-            if (meta.filetype == \'file\') {
-                callback(url, {title: file.name});
-            }
-            if (meta.filetype == \'image\') {
-                callback(url, {alt: file.name});
-            }
-            if (meta.filetype == \'media\') {
-                callback(url);
-            }
+            while (url.match(reg)) { url = url.replace(reg, \'/\'); }
+            callback(url);
         }
     });
     return false;

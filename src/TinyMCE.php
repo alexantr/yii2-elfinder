@@ -17,7 +17,7 @@ class TinyMCE
     public static function getFilePickerCallback($url, $popupSettings = [])
     {
         $default = [
-            'title' => 'elFinder 2.1',
+            'title' => 'elFinder',
             'width' => 900,
             'height' => 500,
         ];
@@ -29,20 +29,10 @@ class TinyMCE
         $callback = <<<JSEXP
 function (callback, value, meta) {
     tinymce.activeEditor.windowManager.open($encodedSettings, {
-        oninsert: function (file, fm) {
+        oninsert: function (file) {
             var url = file.url, reg = /\/[^/]+?\/\.\.\//;
-            while(url.match(reg)) {
-                url = url.replace(reg, '/');
-            }
-            if (meta.filetype == 'file') {
-                callback(url, {title: file.name});
-            }
-            if (meta.filetype == 'image') {
-                callback(url, {alt: file.name});
-            }
-            if (meta.filetype == 'media') {
-                callback(url);
-            }
+            while (url.match(reg)) { url = url.replace(reg, '/'); }
+            callback(url);
         }
     });
     return false;

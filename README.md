@@ -21,7 +21,7 @@ composer require alexantr/yii2-elfinder
 ### Configure actions
 
 For using elFinder you must create and configure controller. See complete example with actions for elFinder's connector,
-`InputFile` widget, CKEditor `filebrowser*` params and TinyMCE `file_picker_callback` param:
+`InputFile` widget, CKEditor `filebrowser*` options and TinyMCE `file_picker_callback` option:
 
 ```php
 <?php
@@ -94,7 +94,7 @@ Example of `InputFile` widget with enabled mime filter and preview:
 ]) ?>
 ```
 
-*Note 1:* Filter param is using to display only certain files based on their mime type. Check `onlyMimes` option
+*Note 1:* Filter option is using to display only certain files based on their mime type. Check `onlyMimes` option
 in [elFinder docs](https://github.com/Studio-42/elFinder/wiki/Client-configuration-options-2.1#onlyMimes).
 
 *Note 2:* Preview displays only predefined (saved earlier) input value and not updating on the fly after new selection.
@@ -154,7 +154,7 @@ class ElfinderController extends Controller
 ### Integration with CKEditor
 
 For using elFinder with CKEditor widget (like [this one](https://github.com/alexantr/yii2-ckeditor)) you need to
-specify params `filebrowserBrowseUrl` and (or) `filebrowserImageBrowseUrl`:
+specify options `filebrowserBrowseUrl` and (or) `filebrowserImageBrowseUrl`:
 
 ```php
 <?= alexantr\ckeditor\CKEditor::widget([
@@ -172,7 +172,7 @@ specify params `filebrowserBrowseUrl` and (or) `filebrowserImageBrowseUrl`:
 ### Integration with TinyMCE 4
 
 For using elFinder with TinyMCE 4 widget (like [this one](https://github.com/2amigos/yii2-tinymce-widget)) you need to
-specify param `file_picker_callback`:
+specify option `file_picker_callback`:
 
 ```php
 <?= dosamigos\tinymce\TinyMce::widget([
@@ -183,6 +183,8 @@ specify param `file_picker_callback`:
     ],
 ]) ?>
 ```
+
+*Note:* option `file_picker_callback` available since 4.1.0 version of TinyMCE js plugin.
 
 With second param in `getFilePickerCallback()` you can set additional `tinymce.WindowManager.open` settings:
 
