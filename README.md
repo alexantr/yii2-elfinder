@@ -99,6 +99,15 @@ in [elFinder docs](https://github.com/Studio-42/elFinder/wiki/Client-configurati
 
 *Note 2:* Preview displays only predefined (saved earlier) input value and not updating on the fly after new selection.
 
+If you want to use the `InputFile` widget in `ActiveForm`, it can be done like this:
+
+```php
+<?= $form->field($model, 'attributeName')
+    ->widget(alexantr\elfinder\InputFile::className(), [
+        'clientRoute' => 'elfinder/input',
+    ]) ?>
+```
+
 Using textarea instead text input (can be useful with enabled multiple selection):
 
 ```php
