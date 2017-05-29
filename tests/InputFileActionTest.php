@@ -33,7 +33,7 @@ class InputFileActionTest extends TestCase
         $out = Yii::$app->runAction('elfinder/input');
 
         $expected = '"getFileCallback":function (file) {' . "\n" .
-            '    window.opener.document.getElementById("test").value = file.url;' . "\n" .
+            '    window.opener.jQuery("#test").val(file.url).trigger("change");' . "\n" .
             '    window.close();' . "\n" .
             '},';
 
@@ -48,16 +48,15 @@ class InputFileActionTest extends TestCase
         $out = Yii::$app->runAction('elfinder/input');
 
         $expected = '"getFileCallback":function (files) {' . "\n" .
-            '    var urls = [], separator = ",";' . "\n" .
+            '    var urls = [], separator = ",", el = window.opener.jQuery("#test"), value = el.val();' . "\n" .
             '    for (var i in files) {' . "\n" .
             '        urls.push(files[i].url);' . "\n" .
             '    }' . "\n" .
-            '    var el = window.opener.document.getElementById("test");' . "\n" .
-            '    if (el.tagName.toLowerCase() == "textarea") separator = "\n";' . "\n" .
-            '    if (el.value) {' . "\n" .
-            '        el.value = el.value + separator + urls.join(separator);' . "\n" .
+            '    if (el.prop("tagName").toLowerCase() == "textarea") separator = "\n";' . "\n" .
+            '    if (value) {' . "\n" .
+            '        el.val(value + separator + urls.join(separator)).trigger("change");' . "\n" .
             '    } else {' . "\n" .
-            '        el.value = urls.join(separator);' . "\n" .
+            '        el.val(urls.join(separator)).trigger("change");' . "\n" .
             '    }' . "\n" .
             '    window.close();' . "\n" .
             '},';

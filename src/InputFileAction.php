@@ -36,16 +36,15 @@ class InputFileAction extends ClientBaseAction
             $this->settings['commandsOptions']['getfile']['multiple'] = true;
             $callback = <<<JSEXP
 function (files) {
-    var urls = [], separator = "{$this->separator}";
+    var urls = [], separator = "{$this->separator}", el = window.opener.jQuery("#$id"), value = el.val();
     for (var i in files) {
         urls.push(files[i].url);
     }
-    var el = window.opener.document.getElementById("$id");
-    if (el.tagName.toLowerCase() == "textarea") separator = "{$this->textareaSeparator}";
-    if (el.value) {
-        el.value = el.value + separator + urls.join(separator);
+    if (el.prop("tagName").toLowerCase() == "textarea") separator = "{$this->textareaSeparator}";
+    if (value) {
+        el.val(value + separator + urls.join(separator)).trigger("change");
     } else {
-        el.value = urls.join(separator);
+        el.val(urls.join(separator)).trigger("change");
     }
     window.close();
 }
@@ -53,7 +52,7 @@ JSEXP;
         } else {
             $callback = <<<JSEXP
 function (file) {
-    window.opener.document.getElementById("$id").value = file.url;
+    window.opener.jQuery("#$id").val(file.url).trigger("change");
     window.close();
 }
 JSEXP;
