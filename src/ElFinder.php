@@ -64,7 +64,7 @@ class ElFinder extends Widget
         $view = $this->getView();
 
         if ($this->buttonNoConflict) {
-            $view->registerJs('jQuery.fn.btn = jQuery.fn.button.noConflict();');
+            $view->registerJs('if (jQuery.fn.button.noConflict) { jQuery.fn.btn = jQuery.fn.button.noConflict(); }');
         }
 
         $bundle = ElFinderAsset::register($view);

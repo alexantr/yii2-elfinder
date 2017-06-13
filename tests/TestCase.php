@@ -35,6 +35,9 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
         $this->destroyApplication();
     }
 
+    /**
+     * Clean up after all tests in class.
+     */
     public static function tearDownAfterClass()
     {
         parent::tearDownAfterClass();
@@ -47,15 +50,6 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
      * @param array $config The application configuration, if needed
      * @param string $appClass name of the application class to create
      */
-    protected function mockApplication($config = [], $appClass = '\yii\console\Application')
-    {
-        new $appClass(ArrayHelper::merge([
-            'id' => 'testapp',
-            'basePath' => __DIR__,
-            'vendorPath' => dirname(__DIR__) . '/vendor',
-        ], $config));
-    }
-
     protected function mockWebApplication($config = [], $appClass = '\yii\web\Application')
     {
         new $appClass(ArrayHelper::merge([
@@ -89,7 +83,9 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
         $assets_path = Yii::getAlias('@tests/data/assets');
         if ($assets_path && $handle = opendir($assets_path)) {
             while (($file = readdir($handle)) !== false) {
-                if (strpos($file, '.') === 0) continue;
+                if (strpos($file, '.') === 0) {
+                    continue;
+                }
                 $path = $assets_path . DIRECTORY_SEPARATOR . $file;
                 if (is_dir($path)) {
                     FileHelper::removeDirectory($path);

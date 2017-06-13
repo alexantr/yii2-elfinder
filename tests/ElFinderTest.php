@@ -155,6 +155,6 @@ class ElFinderTest extends TestCase
             'content' => $content,
         ]);
 
-        $this->assertContains('jQuery.fn.btn = jQuery.fn.button.noConflict();', $out);
+        $this->assertContains('if (jQuery.fn.button.noConflict) { jQuery.fn.btn = jQuery.fn.button.noConflict(); }', $out);
     }
 }
