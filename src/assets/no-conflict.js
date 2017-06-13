@@ -1,0 +1,1 @@
+jQuery.fn.btn = jQuery.fn.button.noConflict();
