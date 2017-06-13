@@ -13,7 +13,7 @@ This extension integrates an [elFinder 2.1](http://studio-42.github.io/elFinder/
 Install extension through [composer](http://getcomposer.org/):
 
 ```
-composer require alexantr/yii2-elfinder
+composer require "alexantr/yii2-elfinder:^1.1"
 ```
 
 ## Usage
