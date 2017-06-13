@@ -8,7 +8,7 @@ namespace alexantr\elfinder;
  */
 class ElFinderNoConflictAsset extends \yii\web\AssetBundle
 {
-    public $sourcePath = __DIR__ . '/assets';
+    public $sourcePath = '@vendor/alexantr/yii2-elfinder/src/assets';
     public $js = ['no-conflict.js'];
 
     public $depends = ['yii\bootstrap\BootstrapPluginAsset', 'yii\jui\JuiAsset'];
