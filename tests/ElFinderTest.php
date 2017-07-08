@@ -140,6 +140,47 @@ class ElFinderTest extends TestCase
         $this->assertNotContains('"lang":', $out); // no lang param
     }
 
+    public function testUnknownLangParam()
+    {
+        $view = $this->mockView();
+
+        $out = $view->renderFile('@alexantr/elfinder/views/elfinder.php', [
+            'connectorRoute' => '/elfinder/connector',
+            'settings' => [
+                'lang' => 'xx',
+            ],
+        ]);
+
+        $this->assertNotContains('/js/i18n/elfinder', $out); // no lang file
+        $this->assertNotContains('"lang":', $out); // no lang param
+    }
+
+    public function testDefaultHeightParam()
+    {
+        $view = $this->mockView();
+
+        $out = $view->renderFile('@alexantr/elfinder/views/elfinder.php', [
+            'connectorRoute' => '/elfinder/connector',
+            'settings' => [],
+        ]);
+
+        $this->assertRegExp('/(' . preg_quote('"height":"100%"') . ')|(' . preg_quote('jQuery(window).height() - 2') . ')/', $out);
+    }
+
+    public function testDisabledHeightParam()
+    {
+        $view = $this->mockView();
+
+        $out = $view->renderFile('@alexantr/elfinder/views/elfinder.php', [
+            'connectorRoute' => '/elfinder/connector',
+            'settings' => [
+                'height' => false,
+            ],
+        ]);
+
+        $this->assertNotContains('"height":', $out);
+    }
+
     public function testButtonNoConflictEnabled()
     {
         $view = $this->mockView();

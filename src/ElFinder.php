@@ -83,7 +83,13 @@ class ElFinder extends Widget
         $this->settings['soundPath'] = $bundle->baseUrl . '/sounds';
 
         if (!isset($this->settings['height'])) {
-            $this->settings['height'] = new JsExpression('jQuery(window).height() - 2');
+            if (is_callable('\elFinder::getApiFullVersion') && version_compare(\elFinder::getApiFullVersion(), '2.1.25', '>=')) {
+                $this->settings['height'] = '100%';
+            } else {
+                $this->settings['height'] = new JsExpression('jQuery(window).height() - 2');
+            }
+        } elseif ($this->settings['height'] === false) {
+            unset($this->settings['height']);
         }
 
         $settings = Json::encode($this->settings);
