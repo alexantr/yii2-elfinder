@@ -3,6 +3,7 @@
 namespace tests;
 
 use alexantr\elfinder\ElFinder;
+use alexantr\elfinder\ElFinderAsset;
 use Yii;
 
 class ElFinderTest extends TestCase
@@ -197,5 +198,20 @@ class ElFinderTest extends TestCase
         ]);
 
         $this->assertContains('if (jQuery.fn.button.noConflict) { jQuery.fn.btn = jQuery.fn.button.noConflict(); }', $out);
+    }
+
+    public function testPaths()
+    {
+        $view = $this->mockView();
+
+        $bundle = ElFinderAsset::register($view);
+
+        $out = $view->renderFile('@alexantr/elfinder/views/elfinder.php', [
+            'connectorRoute' => '/elfinder/connector',
+            'settings' => [],
+        ]);
+
+        $this->assertContains('"soundPath":"' . $bundle->baseUrl . '/sounds"', $out);
+        $this->assertContains('"helpSource":"' . $bundle->baseUrl . '/js/i18n/help/%s.html.js"', $out);
     }
 }
