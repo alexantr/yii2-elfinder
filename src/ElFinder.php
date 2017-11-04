@@ -80,8 +80,8 @@ class ElFinder extends Widget
             }
         }
 
+        $this->settings['baseUrl'] = $bundle->baseUrl . '/';
         $this->settings['soundPath'] = $bundle->baseUrl . '/sounds';
-        $this->settings['helpSource'] = $bundle->baseUrl . '/js/i18n/help/%s.html.js';
 
         if (!isset($this->settings['height'])) {
             if (is_callable('\elFinder::getApiFullVersion') && version_compare(\elFinder::getApiFullVersion(), '2.1.25', '>=')) {

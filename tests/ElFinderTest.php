@@ -211,7 +211,7 @@ class ElFinderTest extends TestCase
             'settings' => [],
         ]);
 
+        $this->assertContains('"baseUrl":"' . $bundle->baseUrl, $out);
         $this->assertContains('"soundPath":"' . $bundle->baseUrl . '/sounds"', $out);
-        $this->assertContains('"helpSource":"' . $bundle->baseUrl . '/js/i18n/help/%s.html.js"', $out);
     }
 }
