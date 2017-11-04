@@ -24,6 +24,10 @@ class ElFinderAsset extends AssetBundle
             'php/',
             '*.html',
             '*.php',
+            '*.md',
+            '*.json',
+            'Changelog',
+            '!*.html.js',
         ],
         'caseSensitive' => false,
     ];

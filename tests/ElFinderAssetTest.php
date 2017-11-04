@@ -27,8 +27,16 @@ class ElFinderAssetTest extends TestCase
         $this->assertContains('/css/theme.css', $out);
         $this->assertContains('/js/elfinder.min.js', $out);
 
-        $this->assertFileNotExists($bundle->basePath . DIRECTORY_SEPARATOR . 'files');
-        $this->assertFileNotExists($bundle->basePath . DIRECTORY_SEPARATOR . 'php');
-        $this->assertFileNotExists($bundle->basePath . DIRECTORY_SEPARATOR . 'elfinder.html');
+        $this->assertFileExists($bundle->basePath . '/css/elfinder.min.css', $out);
+        $this->assertFileExists($bundle->basePath . '/js/elfinder.min.js', $out);
+
+        // check if help files copied
+        $this->assertFileExists($bundle->basePath . '/js/i18n/help/en.html.js', $out);
+
+        $this->assertFileNotExists($bundle->basePath . '/files');
+        $this->assertFileNotExists($bundle->basePath . '/php');
+        $this->assertFileNotExists($bundle->basePath . '/elfinder.html');
+        $this->assertFileNotExists($bundle->basePath . '/elfinder.legacy.html');
+        $this->assertFileNotExists($bundle->basePath . '/Changelog');
     }
 }
