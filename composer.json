@@ -18,6 +18,12 @@
     "yiisoft/yii2-jui": "~2.0.0",
     "studio-42/elfinder": "^2.1"
   },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://asset-packagist.org"
+    }
+  ],
   "autoload": {
     "psr-4": {
       "alexantr\\elfinder\\": "src"
@@ -26,10 +32,6 @@
   "extra": {
     "branch-alias": {
       "dev-master": "1.1.x-dev"
-    },
-    "asset-installer-paths": {
-      "npm-asset-library": "vendor/npm",
-      "bower-asset-library": "vendor/bower"
     }
   }
 }
