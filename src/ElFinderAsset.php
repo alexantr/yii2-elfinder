@@ -27,7 +27,6 @@ class ElFinderAsset extends AssetBundle
             '*.md',
             '*.json',
             'Changelog',
-            '!*.html.js',
         ],
         'caseSensitive' => false,
     ];
