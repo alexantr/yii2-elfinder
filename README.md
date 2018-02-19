@@ -3,9 +3,9 @@
 This extension integrates an [elFinder 2.1](http://studio-42.github.io/elFinder/) file manager into
 [Yii framework 2.0](http://www.yiiframework.com).
 
-[![Latest Stable Version](https://poser.pugx.org/alexantr/yii2-elfinder/v/stable)](https://packagist.org/packages/alexantr/yii2-elfinder)
-[![Total Downloads](https://poser.pugx.org/alexantr/yii2-elfinder/downloads)](https://packagist.org/packages/alexantr/yii2-elfinder)
-[![License](https://poser.pugx.org/alexantr/yii2-elfinder/license)](https://packagist.org/packages/alexantr/yii2-elfinder)
+[![Latest Stable Version](https://img.shields.io/packagist/v/alexantr/yii2-elfinder.svg)](https://packagist.org/packages/alexantr/yii2-elfinder)
+[![Total Downloads](https://img.shields.io/packagist/dt/alexantr/yii2-elfinder.svg)](https://packagist.org/packages/alexantr/yii2-elfinder)
+[![License](https://img.shields.io/github/license/alexantr/yii2-elfinder.svg)](https://raw.githubusercontent.com/alexantr/yii2-elfinder/master/LICENSE)
 [![Build Status](https://travis-ci.org/alexantr/yii2-elfinder.svg?branch=master)](https://travis-ci.org/alexantr/yii2-elfinder)
 
 ## Installation
@@ -13,7 +13,7 @@ This extension integrates an [elFinder 2.1](http://studio-42.github.io/elFinder/
 Install extension through [composer](http://getcomposer.org/):
 
 ```
-composer require "alexantr/yii2-elfinder:^1.1"
+composer require alexantr/yii2-elfinder
 ```
 
 ## Usage
@@ -25,6 +25,7 @@ For using elFinder you must create and configure controller. See complete exampl
 
 ```php
 <?php
+
 namespace app\controllers;
 
 use alexantr\elfinder\CKEditorAction;
@@ -171,11 +172,11 @@ specify options `filebrowserBrowseUrl` and (or) `filebrowserImageBrowseUrl`:
 
 ### Integration with TinyMCE 4
 
-For using elFinder with TinyMCE 4 widget (like [this one](https://github.com/2amigos/yii2-tinymce-widget)) you need to
+For using elFinder with TinyMCE 4 widget (like [this one](https://github.com/alexantr/yii2-tinymce)) you need to
 specify option `file_picker_callback`:
 
 ```php
-<?= dosamigos\tinymce\TinyMce::widget([
+<?= alexantr\tinymce\TinyMce::widget([
     'name' => 'attributeName',
     'clientOptions' => [
         // ...
@@ -213,6 +214,7 @@ Bootstrap and jQuery UI buttons.
 
 * [elFinder Wiki](https://github.com/Studio-42/elFinder/wiki)
 * [CKEditor widget](https://github.com/alexantr/yii2-ckeditor) by [alexantr](https://github.com/alexantr)
+* [TinyMCE widget](https://github.com/alexantr/yii2-tinymce) by [alexantr](https://github.com/alexantr)
 * [CKEditor widget](https://github.com/2amigos/yii2-ckeditor-widget) by [2amigos](https://github.com/2amigos)
 * [TinyMCE widget](https://github.com/2amigos/yii2-tinymce-widget) by [2amigos](https://github.com/2amigos)
 * [Yii framework site](http://www.yiiframework.com)
