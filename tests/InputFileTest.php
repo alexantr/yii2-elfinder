@@ -39,7 +39,7 @@ class InputFileTest extends TestCase
             '<input type="text" id="post-image" class="form-control yii2-elfinder-input" name="Post[image]" value="test-image.jpg">' .
             '<span class="input-group-btn">' .
             '<button type="button" id="post-image_button" class="btn btn-default yii2-elfinder-select-button">Select</button>' .
-            '</span></div><div class="help-block yii2-elfinder-input-preview"><p>test-image.jpg</p></div>';
+            '</span></div><div id="post-image_preview" class="help-block yii2-elfinder-input-preview"><p>test-image.jpg</p></div>';
 
         $this->assertEqualsWithoutLE($expected, $out);
     }
@@ -62,7 +62,7 @@ class InputFileTest extends TestCase
         $expected = '<textarea id="post-image" class="form-control yii2-elfinder-input" name="Post[image]" rows="5">test-image.jpg</textarea>' .
             '<div class="help-block">' .
             '<button type="button" id="post-image_button" class="btn btn-default yii2-elfinder-select-button">Select</button>' .
-            '</div><div class="help-block yii2-elfinder-input-preview"><p>test-image.jpg</p></div>';
+            '</div><div id="post-image_preview" class="help-block yii2-elfinder-input-preview"><p>test-image.jpg</p></div>';
 
         $this->assertEqualsWithoutLE($expected, $out);
     }
@@ -84,7 +84,7 @@ class InputFileTest extends TestCase
             '<input type="text" id="test" class="form-control yii2-elfinder-input" name="test-image-name" value="test-image.jpg">' .
             '<span class="input-group-btn">' .
             '<button type="button" id="test_button" class="btn btn-default yii2-elfinder-select-button">Select</button>' .
-            '</span></div><div class="help-block yii2-elfinder-input-preview"><p>test-image.jpg</p></div>';
+            '</span></div><div id="test_preview" class="help-block yii2-elfinder-input-preview"><p>test-image.jpg</p></div>';
 
         $this->assertEqualsWithoutLE($expected, $out);
     }
@@ -107,12 +107,12 @@ class InputFileTest extends TestCase
         $expected = '<textarea id="test" class="form-control yii2-elfinder-input" name="test-image-name" rows="3">test-image.jpg</textarea>' .
             '<div class="help-block">' .
             '<button type="button" id="test_button" class="btn btn-default yii2-elfinder-select-button">Select</button>' .
-            '</div><div class="help-block yii2-elfinder-input-preview"><p>test-image.jpg</p></div>';
+            '</div><div id="test_preview" class="help-block yii2-elfinder-input-preview"><p>test-image.jpg</p></div>';
 
         $this->assertEqualsWithoutLE($expected, $out);
     }
 
-    public function testRextareaRowsParam()
+    public function testTextareaRowsParam()
     {
         $view = $this->mockView();
         $out = InputFile::widget([
@@ -126,7 +126,7 @@ class InputFileTest extends TestCase
         $expected = '<textarea id="test" class="form-control yii2-elfinder-input" name="test-image-name" rows="7"></textarea>' .
             '<div class="help-block">' .
             '<button type="button" id="test_button" class="btn btn-default yii2-elfinder-select-button">Select</button>' .
-            '</div>';
+            '</div><div id="test_preview" class="help-block yii2-elfinder-input-preview"></div>';
 
         $this->assertEqualsWithoutLE($expected, $out);
     }

@@ -42,10 +42,6 @@ class InputFile extends InputWidget
      */
     public $textareaTemplate = '{input}<div class="help-block">{button}</div>{preview}';
     /**
-     * @var string Preview template
-     */
-    public $previewTemplate = '<div class="help-block yii2-elfinder-input-preview">{preview}</div>';
-    /**
      * @var string Browse button html tag
      */
     public $buttonTag = 'button';
@@ -61,6 +57,14 @@ class InputFile extends InputWidget
      * @var int Default value in "rows" attribute for textarea
      */
     public $textareaRows = 5;
+    /**
+     * @var string Preview container tag name
+     */
+    public $previewTag = 'div';
+    /**
+     * @var array Preview container options
+     */
+    public $previewOptions = ['class' => 'help-block yii2-elfinder-input-preview'];
     /**
      * @var callable Custom callable function which showing preview
      */
@@ -84,6 +88,10 @@ class InputFile extends InputWidget
         }
         if ($this->buttonTag == 'button') {
             $this->buttonOptions['type'] = 'button';
+        }
+
+        if (empty($this->previewOptions['id'])) {
+            $this->previewOptions['id'] = $this->options['id'] . '_preview';
         }
 
         $route = [$this->clientRoute];
@@ -126,8 +134,8 @@ class InputFile extends InputWidget
         }
         $replace['{button}'] = Html::tag($this->buttonTag, $this->buttonText, $this->buttonOptions);
 
-        // callable preview
-        $replace['{preview}'] = '';
+        // preview
+        $replace['{preview}'] = Html::tag($this->previewTag, '', $this->previewOptions);
         if (is_callable($this->preview)) {
             $value = null;
             if ($this->hasModel()) {
@@ -136,7 +144,7 @@ class InputFile extends InputWidget
                 $value = $this->value;
             }
             if ($value !== null) {
-                $replace['{preview}'] = str_replace('{preview}', call_user_func($this->preview, $value), $this->previewTemplate);
+                $replace['{preview}'] = Html::tag($this->previewTag, call_user_func($this->preview, $value), $this->previewOptions);
             }
         }
 
