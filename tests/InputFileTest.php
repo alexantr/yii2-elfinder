@@ -148,6 +148,9 @@ class InputFileTest extends TestCase
             'content' => $widget,
         ]);
 
+        $expected = '<input type="text" id="post-image" class="form-control yii2-elfinder-input" name="Post[image]" data-filter="[&quot;image&quot;]">';
+        $this->assertContainsWithoutLE($expected, $out);
+
         $expected = "alexantr.elFinder.registerSelectButton('post-image_button', '/index.php?r=elfinder%2Findex&id=post-image&filter%5B0%5D=image');";
         $this->assertContains($expected, $out);
     }
@@ -163,13 +166,17 @@ class InputFileTest extends TestCase
             'attribute' => 'image',
             'clientRoute' => '/elfinder/index',
             'multiple' => true,
+            'filter' => 'image',
         ]);
 
         $out = $view->renderFile('@tests/data/views/layout.php', [
             'content' => $widget,
         ]);
 
-        $expected = "alexantr.elFinder.registerSelectButton('post-image_button', '/index.php?r=elfinder%2Findex&id=post-image&multiple=1');";
+        $expected = '<input type="text" id="post-image" class="form-control yii2-elfinder-input" name="Post[image]" data-filter="image" data-multiple="1">';
+        $this->assertContainsWithoutLE($expected, $out);
+
+        $expected = "alexantr.elFinder.registerSelectButton('post-image_button', '/index.php?r=elfinder%2Findex&id=post-image&filter=image&multiple=1');";
         $this->assertContains($expected, $out);
     }
 }

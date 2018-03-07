@@ -3,6 +3,7 @@ namespace alexantr\elfinder;
 
 use yii\base\InvalidConfigException;
 use yii\helpers\Html;
+use yii\helpers\Json;
 use yii\helpers\Url;
 use yii\web\View;
 use yii\widgets\InputWidget;
@@ -17,7 +18,7 @@ class InputFile extends InputWidget
      */
     public $clientRoute;
     /**
-     * @var array Allowed mimes
+     * @var array|string Allowed mimes
      * @see https://github.com/Studio-42/elFinder/wiki/Client-configuration-options#onlyMimes
      */
     public $filter;
@@ -98,9 +99,11 @@ class InputFile extends InputWidget
         $route['id'] = $this->options['id'];
         if (!empty($this->filter)) {
             $route['filter'] = $this->filter;
+            $this->options['data']['filter'] = is_string($this->filter) ? $this->filter : Json::encode($this->filter);
         }
         if ($this->multiple) {
             $route['multiple'] = 1;
+            $this->options['data']['multiple'] = '1';
         }
 
         $this->url = Url::toRoute($route);

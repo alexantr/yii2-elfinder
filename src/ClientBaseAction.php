@@ -5,6 +5,7 @@ namespace alexantr\elfinder;
 use Yii;
 use yii\base\Action;
 use yii\base\InvalidConfigException;
+use yii\helpers\StringHelper;
 
 /**
  * Client base action
@@ -39,7 +40,7 @@ class ClientBaseAction extends Action
         // Get 'onlyMimes' value from GET parameter
         $filter = Yii::$app->request->getQueryParam('filter');
         if (!empty($filter)) {
-            $this->settings['onlyMimes'] = (array)$filter;
+            $this->settings['onlyMimes'] = is_string($filter) ? StringHelper::explode($filter) : $filter;
         }
 
         // disable resize in popup window
