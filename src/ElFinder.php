@@ -10,8 +10,7 @@ use yii\helpers\Url;
 use yii\web\JsExpression;
 
 /**
- * Class ElFinder
- * @package alexantr\elfinder
+ * ElFinder Widget
  */
 class ElFinder extends Widget
 {
@@ -19,13 +18,11 @@ class ElFinder extends Widget
      * @var string A route to connector action
      */
     public $connectorRoute;
-
     /**
      * @var array Client settings
      * @see https://github.com/Studio-42/elFinder/wiki/Client-configuration-options
      */
     public $settings = [];
-
     /**
      * @var bool Resolves conflict between Bootstrab 3 btn and jQuery UI btn. Enable if using widget on page with BS3
      * @see https://github.com/twbs/bootstrap/issues/6094
@@ -33,7 +30,7 @@ class ElFinder extends Widget
     public $buttonNoConflict = false;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function init()
     {
@@ -55,12 +52,11 @@ class ElFinder extends Widget
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function run()
     {
         $id = $this->getId();
-
         $view = $this->getView();
 
         if ($this->buttonNoConflict) {
@@ -109,7 +105,7 @@ class ElFinder extends Widget
 CSSEXP;
         $view->registerCss($css);
 
-        echo "<div id=\"{$id}\"></div>";
+        return "<div id=\"{$id}\"></div>";
     }
 
     /**

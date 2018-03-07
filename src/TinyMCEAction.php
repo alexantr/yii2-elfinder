@@ -4,10 +4,13 @@ namespace alexantr\elfinder;
 
 use yii\web\JsExpression;
 
+/**
+ * TinyMCE action
+ */
 class TinyMCEAction extends ClientBaseAction
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function run()
     {

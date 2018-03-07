@@ -7,8 +7,7 @@ use yii\base\Action;
 use yii\base\InvalidConfigException;
 
 /**
- * Class ClientBaseAction
- * @package alexantr\elfinder
+ * Client base action
  */
 class ClientBaseAction extends Action
 {
@@ -16,14 +15,13 @@ class ClientBaseAction extends Action
      * @var string A route to connector action
      */
     public $connectorRoute;
-
     /**
      * @var array Client settings
      */
     public $settings = [];
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function init()
     {
@@ -34,7 +32,7 @@ class ClientBaseAction extends Action
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function run()
     {

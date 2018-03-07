@@ -36,10 +36,10 @@ class InputFileTest extends TestCase
             },
         ]);
         $expected = '<div class="input-group">' .
-            '<input type="text" id="post-image" class="form-control" name="Post[image]" value="test-image.jpg">' .
+            '<input type="text" id="post-image" class="form-control yii2-elfinder-input" name="Post[image]" value="test-image.jpg">' .
             '<span class="input-group-btn">' .
-            '<button type="button" id="post-image_button" class="btn btn-default">Select</button>' .
-            '</span></div><div class="help-block elfinder-input-preview"><p>test-image.jpg</p></div>';
+            '<button type="button" id="post-image_button" class="btn btn-default yii2-elfinder-select-button">Select</button>' .
+            '</span></div><div class="help-block yii2-elfinder-input-preview"><p>test-image.jpg</p></div>';
 
         $this->assertEqualsWithoutLE($expected, $out);
     }
@@ -59,10 +59,10 @@ class InputFileTest extends TestCase
                 return '<p>' . $value . '</p>';
             },
         ]);
-        $expected = '<textarea id="post-image" class="form-control" name="Post[image]" rows="5">test-image.jpg</textarea>' .
+        $expected = '<textarea id="post-image" class="form-control yii2-elfinder-input" name="Post[image]" rows="5">test-image.jpg</textarea>' .
             '<div class="help-block">' .
-            '<button type="button" id="post-image_button" class="btn btn-default">Select</button>' .
-            '</div><div class="help-block elfinder-input-preview"><p>test-image.jpg</p></div>';
+            '<button type="button" id="post-image_button" class="btn btn-default yii2-elfinder-select-button">Select</button>' .
+            '</div><div class="help-block yii2-elfinder-input-preview"><p>test-image.jpg</p></div>';
 
         $this->assertEqualsWithoutLE($expected, $out);
     }
@@ -81,10 +81,10 @@ class InputFileTest extends TestCase
             },
         ]);
         $expected = '<div class="input-group">' .
-            '<input type="text" id="test" class="form-control" name="test-image-name" value="test-image.jpg">' .
+            '<input type="text" id="test" class="form-control yii2-elfinder-input" name="test-image-name" value="test-image.jpg">' .
             '<span class="input-group-btn">' .
-            '<button type="button" id="test_button" class="btn btn-default">Select</button>' .
-            '</span></div><div class="help-block elfinder-input-preview"><p>test-image.jpg</p></div>';
+            '<button type="button" id="test_button" class="btn btn-default yii2-elfinder-select-button">Select</button>' .
+            '</span></div><div class="help-block yii2-elfinder-input-preview"><p>test-image.jpg</p></div>';
 
         $this->assertEqualsWithoutLE($expected, $out);
     }
@@ -99,15 +99,15 @@ class InputFileTest extends TestCase
             'value' => 'test-image.jpg',
             'clientRoute' => '/elfinder/index',
             'textarea' => true,
-            'options' => ['class' => 'form-control', 'rows' => 3],
+            'textareaRows' => 3,
             'preview' => function ($value) {
                 return '<p>' . $value . '</p>';
             },
         ]);
-        $expected = '<textarea id="test" class="form-control" name="test-image-name" rows="3">test-image.jpg</textarea>' .
+        $expected = '<textarea id="test" class="form-control yii2-elfinder-input" name="test-image-name" rows="3">test-image.jpg</textarea>' .
             '<div class="help-block">' .
-            '<button type="button" id="test_button" class="btn btn-default">Select</button>' .
-            '</div><div class="help-block elfinder-input-preview"><p>test-image.jpg</p></div>';
+            '<button type="button" id="test_button" class="btn btn-default yii2-elfinder-select-button">Select</button>' .
+            '</div><div class="help-block yii2-elfinder-input-preview"><p>test-image.jpg</p></div>';
 
         $this->assertEqualsWithoutLE($expected, $out);
     }
@@ -123,9 +123,9 @@ class InputFileTest extends TestCase
             'textarea' => true,
             'textareaRows' => 7,
         ]);
-        $expected = '<textarea id="test" class="form-control" name="test-image-name" rows="7"></textarea>' .
+        $expected = '<textarea id="test" class="form-control yii2-elfinder-input" name="test-image-name" rows="7"></textarea>' .
             '<div class="help-block">' .
-            '<button type="button" id="test_button" class="btn btn-default">Select</button>' .
+            '<button type="button" id="test_button" class="btn btn-default yii2-elfinder-select-button">Select</button>' .
             '</div>';
 
         $this->assertEqualsWithoutLE($expected, $out);
@@ -148,15 +148,7 @@ class InputFileTest extends TestCase
             'content' => $widget,
         ]);
 
-        $expected = "jQuery(document).on('click', '#post-image_button', function (e) {
-    e.preventDefault();
-    var w = screen.width / 1.5, h = screen.height / 1.5;
-    if (w < 900 && screen.width > 960) w = 900;
-    if (h < 600 && screen.height > 660) h = 600;
-    var params = 'menubar=no,toolbar=no,location=no,directories=no,status=no,fullscreen=no,width=' + w + ',height=' + h;
-    var win = window.open('/index.php?r=elfinder%2Findex&id=post-image&filter%5B0%5D=image', 'elfinder_post-image', params);
-    win.focus();
-});";
+        $expected = "alexantr.elFinder.registerSelectButton('post-image_button', '/index.php?r=elfinder%2Findex&id=post-image&filter%5B0%5D=image');";
         $this->assertContains($expected, $out);
     }
 
@@ -177,15 +169,7 @@ class InputFileTest extends TestCase
             'content' => $widget,
         ]);
 
-        $expected = "jQuery(document).on('click', '#post-image_button', function (e) {
-    e.preventDefault();
-    var w = screen.width / 1.5, h = screen.height / 1.5;
-    if (w < 900 && screen.width > 960) w = 900;
-    if (h < 600 && screen.height > 660) h = 600;
-    var params = 'menubar=no,toolbar=no,location=no,directories=no,status=no,fullscreen=no,width=' + w + ',height=' + h;
-    var win = window.open('/index.php?r=elfinder%2Findex&id=post-image&multiple=1', 'elfinder_post-image', params);
-    win.focus();
-});";
+        $expected = "alexantr.elFinder.registerSelectButton('post-image_button', '/index.php?r=elfinder%2Findex&id=post-image&multiple=1');";
         $this->assertContains($expected, $out);
     }
 }

@@ -5,13 +5,12 @@ namespace alexantr\elfinder;
 use yii\web\JsExpression;
 
 /**
- * Class CKEditorAction
- * @package alexantr\elfinder
+ * CKEditor action
  */
 class CKEditorAction extends ClientBaseAction
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function run()
     {

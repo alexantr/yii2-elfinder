@@ -4,10 +4,6 @@ namespace alexantr\elfinder;
 
 use yii\web\AssetBundle;
 
-/**
- * Class ElFinderAsset
- * @package alexantr\elfinder
- */
 class ElFinderAsset extends AssetBundle
 {
     public $sourcePath = '@vendor/studio-42/elfinder';

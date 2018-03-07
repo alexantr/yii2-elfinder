@@ -4,11 +4,11 @@ namespace alexantr\elfinder;
 use yii\base\InvalidConfigException;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\web\View;
 use yii\widgets\InputWidget;
 
 /**
- * Class InputFile
- * @package alexantr\elfinder
+ * InputFile Widget
  */
 class InputFile extends InputWidget
 {
@@ -16,63 +16,51 @@ class InputFile extends InputWidget
      * @var string Route to elFinder client
      */
     public $clientRoute;
-
     /**
      * @var array Allowed mimes
      * @see https://github.com/Studio-42/elFinder/wiki/Client-configuration-options#onlyMimes
      */
     public $filter;
-
     /**
      * @var bool Allow select multiple files
      */
     public $multiple = false;
-
     /**
      * @var string Use textarea for multiple paths
      */
     public $textarea = false;
-
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-    public $options = ['class' => 'form-control'];
-
+    public $options = ['class' => 'form-control yii2-elfinder-input'];
     /**
      * @var string Input template
      */
     public $template = '<div class="input-group">{input}<span class="input-group-btn">{button}</span></div>{preview}';
-
     /**
      * @var string Input template
      */
     public $textareaTemplate = '{input}<div class="help-block">{button}</div>{preview}';
-
     /**
      * @var string Preview template
      */
-    public $previewTemplate = '<div class="help-block elfinder-input-preview">{preview}</div>';
-
+    public $previewTemplate = '<div class="help-block yii2-elfinder-input-preview">{preview}</div>';
     /**
      * @var string Browse button html tag
      */
     public $buttonTag = 'button';
-
     /**
      * @var string Browse button text
      */
     public $buttonText = 'Select';
-
     /**
      * @var array Browse button options
      */
-    public $buttonOptions = ['class' => 'btn btn-default'];
-
+    public $buttonOptions = ['class' => 'btn btn-default yii2-elfinder-select-button'];
     /**
      * @var int Default value in "rows" attribute for textarea
      */
     public $textareaRows = 5;
-
     /**
      * @var callable Custom callable function which showing preview
      */
@@ -81,7 +69,7 @@ class InputFile extends InputWidget
     private $url;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function init()
     {
@@ -111,7 +99,7 @@ class InputFile extends InputWidget
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function run()
     {
@@ -152,20 +140,11 @@ class InputFile extends InputWidget
             }
         }
 
-        $js = <<<JSEXP
-jQuery(document).on('click', '#{$this->buttonOptions['id']}', function (e) {
-    e.preventDefault();
-    var w = screen.width / 1.5, h = screen.height / 1.5;
-    if (w < 900 && screen.width > 960) w = 900;
-    if (h < 600 && screen.height > 660) h = 600;
-    var params = 'menubar=no,toolbar=no,location=no,directories=no,status=no,fullscreen=no,width=' + w + ',height=' + h;
-    var win = window.open('{$this->url}', 'elfinder_{$this->options['id']}', params);
-    win.focus();
-});
-JSEXP;
+        $view = $this->getView();
+        HelperAsset::register($view);
 
-        $this->getView()->registerJs($js);
+        $view->registerJs("alexantr.elFinder.registerSelectButton('{$this->buttonOptions['id']}', '{$this->url}');", View::POS_END);
 
-        echo strtr($this->template, $replace);
+        return strtr($this->template, $replace);
     }
 }

@@ -7,8 +7,7 @@ use yii\helpers\Html;
 use yii\web\JsExpression;
 
 /**
- * Class InputFileAction
- * @package alexantr\elfinder
+ * InputFile action
  */
 class InputFileAction extends ClientBaseAction
 {
@@ -16,14 +15,13 @@ class InputFileAction extends ClientBaseAction
      * @var string Separator for multiple paths in text input
      */
     public $separator = ',';
-
     /**
      * @var string Separator for multiple paths in textarea
      */
     public $textareaSeparator = '\n';
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function run()
     {

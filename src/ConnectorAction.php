@@ -7,18 +7,17 @@ use yii\base\Action;
 use yii\web\Response;
 
 /**
- * Class ConnectorAction
- * @package alexantr\elfinder
+ * Connector action
  */
 class ConnectorAction extends Action
 {
     /**
-     * @var array
+     * @var array elFinder connector options
      */
     public $options = [];
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function run()
     {
