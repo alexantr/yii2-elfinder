@@ -93,19 +93,7 @@ class ElFinder extends Widget
 
         $view->registerJs("jQuery('#$id').elfinder($settings);");
 
-        // force 'content-box' for 'box-sizing'
-        $css = <<<CSSEXP
-#{$id}, #{$id} *,
-.elfinder-contextmenu, .elfinder-contextmenu *,
-.elfinder-quicklook, .elfinder-quicklook * {
-    -webkit-box-sizing: content-box;
-    -moz-box-sizing: content-box;
-    box-sizing: content-box;
-}
-CSSEXP;
-        $view->registerCss($css);
-
-        return "<div id=\"{$id}\"></div>";
+        return "<div id=\"$id\"></div>";
     }
 
     /**
