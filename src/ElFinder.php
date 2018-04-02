@@ -31,9 +31,12 @@ class ElFinder extends Widget
 
     /**
      * {@inheritdoc}
+     * @throws InvalidConfigException
      */
     public function init()
     {
+        parent::init();
+
         if ($this->connectorRoute === null) {
             throw new InvalidConfigException('Connector route must be specified.');
         }

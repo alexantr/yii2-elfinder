@@ -75,6 +75,7 @@ class InputFile extends InputWidget
 
     /**
      * {@inheritdoc}
+     * @throws InvalidConfigException
      */
     public function init()
     {

@@ -23,6 +23,7 @@ class ClientBaseAction extends Action
 
     /**
      * {@inheritdoc}
+     * @throws InvalidConfigException
      */
     public function init()
     {
