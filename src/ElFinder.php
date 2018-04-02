@@ -7,7 +7,6 @@ use yii\base\InvalidConfigException;
 use yii\base\Widget;
 use yii\helpers\Json;
 use yii\helpers\Url;
-use yii\web\JsExpression;
 
 /**
  * ElFinder Widget
@@ -83,11 +82,7 @@ class ElFinder extends Widget
         $this->settings['soundPath'] = $bundle->baseUrl . '/sounds';
 
         if (!isset($this->settings['height'])) {
-            if (is_callable('\elFinder::getApiFullVersion') && version_compare(\elFinder::getApiFullVersion(), '2.1.25', '>=')) {
-                $this->settings['height'] = '100%';
-            } else {
-                $this->settings['height'] = new JsExpression('jQuery(window).height() - 2');
-            }
+            $this->settings['height'] = '100%';
         } elseif ($this->settings['height'] === false) {
             unset($this->settings['height']);
         }
@@ -101,7 +96,6 @@ class ElFinder extends Widget
 
     /**
      * Set elFinder's correct "lang" param
-     * Based on https://github.com/Studio-42/elFinder/wiki/Automatically-load-language
      * @param string $language
      * @return string
      */
@@ -109,8 +103,8 @@ class ElFinder extends Widget
     {
         $full_language = mb_strtolower($language);
         $lang = substr($full_language, 0, 2);
-        if ($lang == 'ja') {
-            $lang = 'jp';
+        if ($lang == 'jp') {
+            $lang = 'ja';
         } elseif ($lang == 'pt') {
             $lang = 'pt_BR';
         } elseif ($lang == 'ug') {

@@ -51,19 +51,19 @@ class ElFinderTest extends TestCase
         $this->assertContains('"lang":"ru"', $out); // has lang param
     }
 
-    public function testLangParamJa()
+    public function testLangParamJp()
     {
         $view = $this->mockView();
 
         $out = $view->renderFile('@alexantr/elfinder/views/elfinder.php', [
             'connectorRoute' => '/elfinder/connector',
             'settings' => [
-                'lang' => 'ja',
+                'lang' => 'jp',
             ],
         ]);
 
-        $this->assertContains('/js/i18n/elfinder.jp.js', $out);
-        $this->assertContains('"lang":"jp"', $out);
+        $this->assertContains('/js/i18n/elfinder.ja.js', $out);
+        $this->assertContains('"lang":"ja"', $out);
     }
 
     public function testLangParamPt()
