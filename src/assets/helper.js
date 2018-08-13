@@ -19,6 +19,15 @@ alexantr.elFinder = (function ($) {
         },
         filePickerCallback: function (settings) {
             return function (callback, value, meta) {
+                // append filter query param
+                var separator = settings.file.indexOf('?') !== -1 ? '&' : '?';
+                if (meta.filetype === 'image') {
+                    settings.url = settings.file + separator + 'filter=image';
+                } else if (meta.filetype === 'media') {
+                    settings.url = settings.file + separator + 'filter=' + encodeURIComponent('audio,video');
+                } else {
+                    settings.url = settings.file;
+                }
                 tinymce.activeEditor.windowManager.open(settings, {
                     oninsert: function (file) {
                         var url = file.url, reg = /\/[^/]+?\/\.\.\//;
