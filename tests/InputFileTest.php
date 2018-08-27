@@ -179,4 +179,24 @@ class InputFileTest extends TestCase
         $expected = "alexantr.elFinder.registerSelectButton('post-image_button', '/index.php?r=elfinder%2Findex&id=post-image&filter=image&multiple=1');";
         $this->assertContains($expected, $out);
     }
+
+    public function testClientRouteAsArray()
+    {
+        $view = $this->mockView();
+
+        $model = new Post();
+        $widget = InputFile::widget([
+            'view' => $view,
+            'model' => $model,
+            'attribute' => 'image',
+            'clientRoute' => ['/elfinder/index', 'section' => 'test'],
+        ]);
+
+        $out = $view->renderFile('@tests/data/views/layout.php', [
+            'content' => $widget,
+        ]);
+
+        $expected = "alexantr.elFinder.registerSelectButton('post-image_button', '/index.php?r=elfinder%2Findex&section=test&id=post-image');";
+        $this->assertContains($expected, $out);
+    }
 }

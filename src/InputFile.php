@@ -14,7 +14,7 @@ use yii\widgets\InputWidget;
 class InputFile extends InputWidget
 {
     /**
-     * @var string Route to elFinder client
+     * @var string|array Route to elFinder client
      */
     public $clientRoute;
     /**
@@ -71,8 +71,6 @@ class InputFile extends InputWidget
      */
     public $preview;
 
-    private $url;
-
     /**
      * {@inheritdoc}
      * @throws InvalidConfigException
@@ -96,18 +94,12 @@ class InputFile extends InputWidget
             $this->previewOptions['id'] = $this->options['id'] . '_preview';
         }
 
-        $route = [$this->clientRoute];
-        $route['id'] = $this->options['id'];
         if (!empty($this->filter)) {
-            $route['filter'] = $this->filter;
             $this->options['data']['filter'] = is_string($this->filter) ? $this->filter : Json::encode($this->filter);
         }
         if ($this->multiple) {
-            $route['multiple'] = 1;
             $this->options['data']['multiple'] = '1';
         }
-
-        $this->url = Url::toRoute($route);
     }
 
     /**
@@ -155,8 +147,30 @@ class InputFile extends InputWidget
         $view = $this->getView();
         HelperAsset::register($view);
 
-        $view->registerJs("alexantr.elFinder.registerSelectButton('{$this->buttonOptions['id']}', '{$this->url}');", View::POS_END);
+        $buttonId = $this->buttonOptions['id'];
+
+        $route = $this->createRoute();
+        $url = Url::toRoute($route);
+
+        $view->registerJs("alexantr.elFinder.registerSelectButton('$buttonId', '$url');", View::POS_END);
 
         return strtr($this->template, $replace);
+    }
+
+    /**
+     * Creates route to elFinder client
+     * @return array
+     */
+    protected function createRoute()
+    {
+        $route = (array)$this->clientRoute;
+        $route['id'] = $this->options['id'];
+        if (!empty($this->filter)) {
+            $route['filter'] = $this->filter;
+        }
+        if ($this->multiple) {
+            $route['multiple'] = 1;
+        }
+        return $route;
     }
 }
