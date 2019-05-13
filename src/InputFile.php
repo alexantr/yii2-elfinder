@@ -31,9 +31,9 @@ class InputFile extends InputWidget
      */
     public $textarea = false;
     /**
-     * {@inheritdoc}
+     * @var string|array Input CSS classes
      */
-    public $options = ['class' => 'form-control yii2-elfinder-input'];
+    public $inputCssClass = 'form-control yii2-elfinder-input';
     /**
      * @var string Input template
      */
@@ -107,25 +107,32 @@ class InputFile extends InputWidget
      */
     public function run()
     {
+        $inputOptions = $this->options;
+        $inputCssClass = $this->inputCssClass;
+        if (!is_array($this->inputCssClass)) {
+            $inputCssClass = preg_split('/\s+/', $this->inputCssClass, -1, PREG_SPLIT_NO_EMPTY);
+        }
+        Html::addCssClass($inputOptions, $inputCssClass);
+
         if ($this->textarea) {
             $this->template = $this->textareaTemplate;
-            if (!isset($this->options['rows'])) {
-                $this->options['rows'] = $this->textareaRows;
+            if (!isset($inputOptions['rows'])) {
+                $inputOptions['rows'] = $this->textareaRows;
             }
         }
 
         $replace = [];
         if ($this->hasModel()) {
             if ($this->textarea) {
-                $replace['{input}'] = Html::activeTextarea($this->model, $this->attribute, $this->options);
+                $replace['{input}'] = Html::activeTextarea($this->model, $this->attribute, $inputOptions);
             } else {
-                $replace['{input}'] = Html::activeTextInput($this->model, $this->attribute, $this->options);
+                $replace['{input}'] = Html::activeTextInput($this->model, $this->attribute, $inputOptions);
             }
         } else {
             if ($this->textarea) {
-                $replace['{input}'] = Html::textarea($this->name, $this->value, $this->options);
+                $replace['{input}'] = Html::textarea($this->name, $this->value, $inputOptions);
             } else {
-                $replace['{input}'] = Html::textInput($this->name, $this->value, $this->options);
+                $replace['{input}'] = Html::textInput($this->name, $this->value, $inputOptions);
             }
         }
         $replace['{button}'] = Html::tag($this->buttonTag, $this->buttonText, $this->buttonOptions);
