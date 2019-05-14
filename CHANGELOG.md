@@ -1,6 +1,6 @@
 # Yii Framework 2 elFinder extension Changelog
 
-## 1.7.0 under development
+## 1.7.0 2019-05-14
 
 - Set minimum elFinder version to 2.1.49 for security reasons
 - Added option `nameOnly` to `InputFileAction`
