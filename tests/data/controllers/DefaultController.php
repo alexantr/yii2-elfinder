@@ -25,6 +25,11 @@ class DefaultController extends Controller
                 'class' => InputFileAction::className(),
                 'connectorRoute' => 'connector',
             ],
+            'inputname' => [
+                'class' => InputFileAction::className(),
+                'connectorRoute' => 'connector',
+                'nameOnly' => true,
+            ],
             'ckeditor' => [
                 'class' => CKEditorAction::className(),
                 'connectorRoute' => 'connector',

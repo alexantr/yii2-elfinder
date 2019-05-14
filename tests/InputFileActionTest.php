@@ -40,6 +40,20 @@ class InputFileActionTest extends TestCase
         $this->assertContainsWithoutLE($expected, $out);
     }
 
+    public function testRunningNameOnly()
+    {
+        $_GET['id'] = 'test';
+
+        $out = Yii::$app->runAction('elfinder/inputname');
+
+        $expected = '"getFileCallback":function (file) {' . "\n" .
+            '    window.opener.jQuery("#test").val(file.name).trigger("change");' . "\n" .
+            '    window.close();' . "\n" .
+            '},';
+
+        $this->assertContainsWithoutLE($expected, $out);
+    }
+
     public function testRunningWithMultipleParam()
     {
         $_GET['id'] = 'test';

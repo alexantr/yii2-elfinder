@@ -3,6 +3,7 @@
 ## 1.7.0 under development
 
 - Set minimum elFinder version to 2.1.49 for security reasons
+- Added option `nameOnly` to `InputFileAction`
 
 
 ## 1.6.0 2019-05-13
