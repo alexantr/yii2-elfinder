@@ -1,5 +1,10 @@
 # Yii Framework 2 elFinder extension Changelog
 
+## 1.7.0 under development
+
+- Set minimum elFinder version to 2.1.49 for security reasons
+
+
 ## 1.6.0 2019-05-13
 
 - Added option `inputCssClass` to `InputFile` to bring back CSS class "yii2-elfinder-input" in Yii >=2.0.17
