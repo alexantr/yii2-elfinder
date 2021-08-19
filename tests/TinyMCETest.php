@@ -12,7 +12,7 @@ class TinyMCETest extends TestCase
 
         $out = TinyMCE::getFilePickerCallback(['/elfinder/tinymce'], ['width' => 1000, 'height' => 600], $view);
 
-        $expected = 'alexantr.elFinder.filePickerCallback({"title":"elFinder","width":1000,"height":600,"url":"\/index.php?r=elfinder%2Ftinymce"})';
+        $expected = 'alexantr.elFinder.filePickerCallback({"title":"elFinder","width":1000,"height":600}, \'/index.php?r=elfinder%2Ftinymce\')';
 
         $this->assertInstanceOf('yii\web\JsExpression', $out);
         $this->assertEqualsWithoutLE($expected, "$out");

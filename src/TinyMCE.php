@@ -28,15 +28,15 @@ class TinyMCE
         ];
 
         $settings = array_merge($default, $popupSettings);
-        $settings['url'] = Url::to($url);
 
         $encodedSettings = Json::htmlEncode($settings);
+        $url = Url::to($url);
 
         if ($view === null) {
             $view = Yii::$app->view;
         }
         HelperAsset::register($view);
 
-        return new JsExpression("alexantr.elFinder.filePickerCallback($encodedSettings)");
+        return new JsExpression("alexantr.elFinder.filePickerCallback($encodedSettings, '$url')");
     }
 }

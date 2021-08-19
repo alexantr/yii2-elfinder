@@ -17,20 +17,22 @@ alexantr.elFinder = (function ($) {
                 win.focus();
             });
         },
-        filePickerCallback: function (settings) {
-            function removeDots(url) {
+        filePickerCallback: function (settings, url) {
+            function removeDots(fileUrl) {
                 var reg = /\/[^/]+?\/\.\.\//;
-                while (url.match(reg)) {
-                    url = url.replace(reg, '/');
+                while (fileUrl.match(reg)) {
+                    fileUrl = fileUrl.replace(reg, '/');
                 }
-                return url;
+                return fileUrl;
             }
             return function (callback, value, meta) {
-                var separator = settings.url.indexOf('?') !== -1 ? '&' : '?';
+                var separator = url.indexOf('?') !== -1 ? '&' : '?';
                 if (meta.filetype === 'image') {
-                    settings.url += separator + 'filter=image';
+                    settings.url = url + separator + 'filter=image';
                 } else if (meta.filetype === 'media') {
-                    settings.url += separator + 'filter=audio%2Cvideo';
+                    settings.url = url + separator + 'filter=audio%2Cvideo';
+                } else {
+                    settings.url = url;
                 }
                 if (tinymce.majorVersion === '4') {
                     tinymce.activeEditor.windowManager.open(settings, {
