@@ -120,7 +120,7 @@ Using textarea instead text input (can be useful with enabled multiple selection
 ]) ?>
 ```
 
-Enable multiple selection to select more then one file in one input:
+Enable multiple selection to select more than one file in one input:
 
 ```php
 <?= alexantr\elfinder\InputFile::widget([
@@ -170,9 +170,9 @@ specify options `filebrowserBrowseUrl` and (or) `filebrowserImageBrowseUrl`:
 
 *Note:* For `filebrowserImageBrowseUrl` we use filter query param to display only images.
 
-### Integration with TinyMCE 4
+### Integration with TinyMCE 4 & 5
 
-For using elFinder with TinyMCE 4 widget (like [this one](https://github.com/alexantr/yii2-tinymce)) you need to
+For using elFinder with TinyMCE widget (like [this one](https://github.com/alexantr/yii2-tinymce)) you need to
 specify option `file_picker_callback`:
 
 ```php
@@ -187,7 +187,8 @@ specify option `file_picker_callback`:
 
 *Note:* option `file_picker_callback` available since 4.1.0 version of TinyMCE js plugin.
 
-With second param in `getFilePickerCallback()` you can set additional `tinymce.WindowManager.open` settings:
+With second param in `getFilePickerCallback()` you can set additional settings for
+`tinymce.activeEditor.windowManager.open` (TinyMCE 4) or `tinymce.activeEditor.windowManager.openUrl` (TinyMCE 5):
 
 ```php
 TinyMCE::getFilePickerCallback(['elfinder/tinymce'], ['width' => 1200, 'height' => 600])

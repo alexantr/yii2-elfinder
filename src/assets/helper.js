@@ -18,26 +18,37 @@ alexantr.elFinder = (function ($) {
             });
         },
         filePickerCallback: function (settings) {
-            return function (callback, value, meta) {
-                // append filter query param
-                var separator = settings.file.indexOf('?') !== -1 ? '&' : '?';
-                if (meta.filetype === 'image') {
-                    settings.url = settings.file + separator + 'filter=image';
-                } else if (meta.filetype === 'media') {
-                    settings.url = settings.file + separator + 'filter=' + encodeURIComponent('audio,video');
-                } else {
-                    settings.url = settings.file;
+            function removeDots(url) {
+                var reg = /\/[^/]+?\/\.\.\//;
+                while (url.match(reg)) {
+                    url = url.replace(reg, '/');
                 }
-                tinymce.activeEditor.windowManager.open(settings, {
-                    oninsert: function (file) {
-                        var url = file.url, reg = /\/[^/]+?\/\.\.\//;
-                        while (url.match(reg)) {
-                            url = url.replace(reg, '/');
+                return url;
+            }
+            return function (callback, value, meta) {
+                var separator = settings.url.indexOf('?') !== -1 ? '&' : '?';
+                if (meta.filetype === 'image') {
+                    settings.url += separator + 'filter=image';
+                } else if (meta.filetype === 'media') {
+                    settings.url += separator + 'filter=audio%2Cvideo';
+                }
+                if (tinymce.majorVersion === '4') {
+                    tinymce.activeEditor.windowManager.open(settings, {
+                        oninsert: function (file) {
+                            var url = removeDots(file.url);
+                            callback(url);
                         }
-                        callback(url);
+                    });
+                } else {
+                    settings.onMessage = function (api, data) {
+                        if (data.mceAction === 'customAction') {
+                            var url = removeDots(data.file.url);
+                            callback(url, {});
+                            api.close();
+                        }
                     }
-                });
-                return false;
+                    tinymce.activeEditor.windowManager.openUrl(settings);
+                }
             }
         }
     }

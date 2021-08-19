@@ -1,5 +1,10 @@
 # Yii Framework 2 elFinder extension Changelog
 
+## 1.8.x-dev
+
+- Set minimum elFinder version to 2.1.59 for security reasons
+- Support TinyMCE 5
+
 ## 1.7.0 2019-05-14
 
 - Set minimum elFinder version to 2.1.49 for security reasons

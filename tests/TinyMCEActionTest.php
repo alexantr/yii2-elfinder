@@ -31,8 +31,12 @@ class TinyMCEActionTest extends TestCase
         $out = Yii::$app->runAction('elfinder/tinymce');
 
         $expected = '"getFileCallback":function (file) {' . "\n" .
-            '    parent.tinymce.activeEditor.windowManager.getParams().oninsert(file);' . "\n" .
-            '    parent.tinymce.activeEditor.windowManager.close();' . "\n" .
+            '    if (parent.tinymce.majorVersion === "4") {' . "\n" .
+            '        parent.tinymce.activeEditor.windowManager.getParams().oninsert(file);' . "\n" .
+            '        parent.tinymce.activeEditor.windowManager.close();' . "\n" .
+            '    } else {' . "\n" .
+            '        parent.postMessage({mceAction: "customAction", file: file}, "*");' . "\n" .
+            '    }' . "\n" .
             '},';
 
         $this->assertContainsWithoutLE($expected, $out);

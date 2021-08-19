@@ -16,8 +16,12 @@ class TinyMCEAction extends ClientBaseAction
     {
         $callback = <<<JSEXP
 function (file) {
-    parent.tinymce.activeEditor.windowManager.getParams().oninsert(file);
-    parent.tinymce.activeEditor.windowManager.close();
+    if (parent.tinymce.majorVersion === "4") {
+        parent.tinymce.activeEditor.windowManager.getParams().oninsert(file);
+        parent.tinymce.activeEditor.windowManager.close();
+    } else {
+        parent.postMessage({mceAction: "customAction", file: file}, "*");
+    }
 }
 JSEXP;
         $this->settings['getFileCallback'] = new JsExpression($callback);

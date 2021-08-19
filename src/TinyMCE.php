@@ -13,7 +13,7 @@ use yii\web\JsExpression;
 class TinyMCE
 {
     /**
-     * Callback for TinyMCE 4 file_picker_callback
+     * Callback for TinyMCE 4 & 5 file_picker_callback
      * @param array|string $url Url to TinyMCEAction
      * @param array $popupSettings TinyMCE popup settings
      * @param \yii\web\View|null $view
@@ -28,7 +28,7 @@ class TinyMCE
         ];
 
         $settings = array_merge($default, $popupSettings);
-        $settings['file'] = Url::to($url);
+        $settings['url'] = Url::to($url);
 
         $encodedSettings = Json::htmlEncode($settings);
 
