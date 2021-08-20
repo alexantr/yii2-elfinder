@@ -6,7 +6,7 @@ use alexantr\elfinder\TinyMCE;
 
 class TinyMCETest extends TestCase
 {
-    public function testTinyMCEFilePickerCallback()
+    public function testTinyMCEFilePickerCallback(): void
     {
         $view = $this->mockView();
 

@@ -4,14 +4,13 @@ namespace tests;
 
 use alexantr\elfinder\InputFile;
 use tests\data\models\Post;
+use yii\base\InvalidConfigException;
 
 class InputFileTest extends TestCase
 {
-    /**
-     * @expectedException \yii\base\InvalidConfigException
-     */
-    public function testEmptyClientRoute()
+    public function testEmptyClientRoute(): void
     {
+        $this->expectException(InvalidConfigException::class);
         $view = $this->mockView();
         $model = new Post();
         InputFile::widget([
@@ -21,7 +20,7 @@ class InputFileTest extends TestCase
         ]);
     }
 
-    public function testInputWithModelAndPreview()
+    public function testInputWithModelAndPreview(): void
     {
         $view = $this->mockView();
         $model = new Post();
@@ -44,7 +43,7 @@ class InputFileTest extends TestCase
         $this->assertEqualsWithoutLE($expected, $out);
     }
 
-    public function testTextareaWithModelAndPreview()
+    public function testTextareaWithModelAndPreview(): void
     {
         $view = $this->mockView();
         $model = new Post();
@@ -67,7 +66,7 @@ class InputFileTest extends TestCase
         $this->assertEqualsWithoutLE($expected, $out);
     }
 
-    public function testInputWithNameAndValueAndPreview()
+    public function testInputWithNameAndValueAndPreview(): void
     {
         $view = $this->mockView();
         $out = InputFile::widget([
@@ -89,7 +88,7 @@ class InputFileTest extends TestCase
         $this->assertEqualsWithoutLE($expected, $out);
     }
 
-    public function testTextareaWithNameAndValueAndPreview()
+    public function testTextareaWithNameAndValueAndPreview(): void
     {
         $view = $this->mockView();
         $out = InputFile::widget([
@@ -112,7 +111,7 @@ class InputFileTest extends TestCase
         $this->assertEqualsWithoutLE($expected, $out);
     }
 
-    public function testTextareaRowsParam()
+    public function testTextareaRowsParam(): void
     {
         $view = $this->mockView();
         $out = InputFile::widget([
@@ -131,7 +130,7 @@ class InputFileTest extends TestCase
         $this->assertEqualsWithoutLE($expected, $out);
     }
 
-    public function testFilterParam()
+    public function testFilterParam(): void
     {
         $view = $this->mockView();
 
@@ -152,10 +151,10 @@ class InputFileTest extends TestCase
         $this->assertContainsWithoutLE($expected, $out);
 
         $expected = "alexantr.elFinder.registerSelectButton('post-image_button', '/index.php?r=elfinder%2Findex&id=post-image&filter%5B0%5D=image');";
-        $this->assertContains($expected, $out);
+        $this->assertStringContainsString($expected, $out);
     }
 
-    public function testMultipleParam()
+    public function testMultipleParam(): void
     {
         $view = $this->mockView();
 
@@ -177,10 +176,10 @@ class InputFileTest extends TestCase
         $this->assertContainsWithoutLE($expected, $out);
 
         $expected = "alexantr.elFinder.registerSelectButton('post-image_button', '/index.php?r=elfinder%2Findex&id=post-image&filter=image&multiple=1');";
-        $this->assertContains($expected, $out);
+        $this->assertStringContainsString($expected, $out);
     }
 
-    public function testClientRouteAsArray()
+    public function testClientRouteAsArray(): void
     {
         $view = $this->mockView();
 
@@ -197,6 +196,6 @@ class InputFileTest extends TestCase
         ]);
 
         $expected = "alexantr.elFinder.registerSelectButton('post-image_button', '/index.php?r=elfinder%2Findex&section=test&id=post-image');";
-        $this->assertContains($expected, $out);
+        $this->assertStringContainsString($expected, $out);
     }
 }

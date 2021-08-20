@@ -3,10 +3,11 @@
 namespace tests;
 
 use Yii;
+use yii\base\InvalidConfigException;
 
 class ClientBaseActionTest extends TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->mockWebApplication([
@@ -26,15 +27,13 @@ class ClientBaseActionTest extends TestCase
         ]);
     }
 
-    /**
-     * @expectedException \yii\base\InvalidConfigException
-     */
-    public function testEmptyConnectorRoute()
+    public function testEmptyConnectorRoute(): void
     {
+        $this->expectException(InvalidConfigException::class);
         Yii::$app->runAction('elfinder/invalid');
     }
 
-    public function testRunningWithFilterAndResizableParam()
+    public function testRunningWithFilterAndResizableParam(): void
     {
         $_GET['filter'] = ['image', 'text'];
 

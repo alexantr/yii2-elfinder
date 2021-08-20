@@ -6,7 +6,7 @@ use Yii;
 
 class CKEditorActionTest extends TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->mockWebApplication([
@@ -26,7 +26,7 @@ class CKEditorActionTest extends TestCase
         ]);
     }
 
-    public function testRunning()
+    public function testRunning(): void
     {
         $out = Yii::$app->runAction('elfinder/ckeditor');
 

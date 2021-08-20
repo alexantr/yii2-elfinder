@@ -6,7 +6,7 @@ use Yii;
 
 class InputFileActionTest extends TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->mockWebApplication([
@@ -26,7 +26,7 @@ class InputFileActionTest extends TestCase
         ]);
     }
 
-    public function testRunning()
+    public function testRunning(): void
     {
         $_GET['id'] = 'test';
 
@@ -40,7 +40,7 @@ class InputFileActionTest extends TestCase
         $this->assertContainsWithoutLE($expected, $out);
     }
 
-    public function testRunningNameOnly()
+    public function testRunningNameOnly(): void
     {
         $_GET['id'] = 'test';
 
@@ -54,7 +54,7 @@ class InputFileActionTest extends TestCase
         $this->assertContainsWithoutLE($expected, $out);
     }
 
-    public function testRunningWithMultipleParam()
+    public function testRunningWithMultipleParam(): void
     {
         $_GET['id'] = 'test';
         $_GET['multiple'] = '1';

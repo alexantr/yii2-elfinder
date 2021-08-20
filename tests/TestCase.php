@@ -19,7 +19,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     /**
      * Mock application prior running tests.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->mockWebApplication();
@@ -27,9 +27,9 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 
     /**
      * Clean up after test.
-     * By default the application created with [[mockApplication]] will be destroyed.
+     * By default, the application created with [[mockApplication]] will be destroyed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
         $this->destroyApplication();
@@ -38,7 +38,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     /**
      * Clean up after all tests in class.
      */
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         parent::tearDownAfterClass();
         self::removeAssets();
@@ -50,7 +50,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
      * @param array $config The application configuration, if needed
      * @param string $appClass name of the application class to create
      */
-    protected function mockWebApplication($config = [], $appClass = '\yii\web\Application')
+    protected function mockWebApplication(array $config = [], string $appClass = '\yii\web\Application')
     {
         new $appClass(ArrayHelper::merge([
             'id' => 'testapp',
@@ -103,7 +103,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
      * Mocks view instance
      * @return View
      */
-    protected function mockView()
+    protected function mockView(): View
     {
         return new View([
             'assetManager' => $this->mockAssetManager(),
@@ -114,7 +114,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
      * Mocks asset manager
      * @return AssetManager
      */
-    protected function mockAssetManager()
+    protected function mockAssetManager(): AssetManager
     {
         return new AssetManager([
             'basePath' => '@tests/data/assets',
@@ -127,7 +127,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
      * @param string $expected
      * @param string $actual
      */
-    public function assertEqualsWithoutLE($expected, $actual)
+    public function assertEqualsWithoutLE(string $expected, string $actual)
     {
         $expected = str_replace("\r\n", "\n", $expected);
         $actual = str_replace("\r\n", "\n", $actual);
@@ -139,10 +139,10 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
      * @param string $expected
      * @param string $actual
      */
-    public function assertContainsWithoutLE($expected, $actual)
+    public function assertContainsWithoutLE(string $expected, string $actual)
     {
         $expected = str_replace("\r\n", "\n", $expected);
         $actual = str_replace("\r\n", "\n", $actual);
-        $this->assertContains($expected, $actual);
+        $this->assertStringContainsString($expected, $actual);
     }
 }

@@ -7,7 +7,7 @@ use yii\web\AssetBundle;
 
 class HelperAssetTest extends TestCase
 {
-    public function testRegister()
+    public function testRegister(): void
     {
         $view = $this->mockView();
 
@@ -16,14 +16,14 @@ class HelperAssetTest extends TestCase
         $bundle = HelperAsset::register($view);
 
         // JqueryAsset, HelperAsset
-        $this->assertEquals(2, count($view->assetBundles));
+        $this->assertCount(2, $view->assetBundles);
 
         $this->assertArrayHasKey('alexantr\\elfinder\\HelperAsset', $view->assetBundles);
         $this->assertTrue($view->assetBundles['alexantr\\elfinder\\HelperAsset'] instanceof AssetBundle);
 
         $out = $view->renderFile('@tests/data/views/layout.php');
 
-        $this->assertContains('/helper.js', $out);
+        $this->assertStringContainsString('/helper.js', $out);
 
         $this->assertFileExists($bundle->basePath . '/helper.js', $out);
     }

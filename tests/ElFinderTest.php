@@ -5,14 +5,13 @@ namespace tests;
 use alexantr\elfinder\ElFinder;
 use alexantr\elfinder\ElFinderAsset;
 use Yii;
+use yii\base\InvalidConfigException;
 
 class ElFinderTest extends TestCase
 {
-    /**
-     * @expectedException \yii\base\InvalidConfigException
-     */
-    public function testEmptyConnectorRoute()
+    public function testEmptyConnectorRoute(): void
     {
+        $this->expectException(InvalidConfigException::class);
         $view = $this->mockView();
 
         ElFinder::widget([
@@ -21,7 +20,7 @@ class ElFinderTest extends TestCase
         ]);
     }
 
-    public function testRender()
+    public function testRender(): void
     {
         $view = $this->mockView();
 
@@ -35,7 +34,7 @@ class ElFinderTest extends TestCase
         $this->assertEqualsWithoutLE($expected, $out);
     }
 
-    public function testAssetsAndLangParamFromApp()
+    public function testAssetsAndLangParamFromApp(): void
     {
         Yii::$app->language = 'be-BY';
         $view = $this->mockView();
@@ -45,13 +44,13 @@ class ElFinderTest extends TestCase
             'settings' => [],
         ]);
 
-        $this->assertContains('"customData":{"_csrf":"', $out);
+        $this->assertStringContainsString('"customData":{"_csrf":"', $out);
 
-        $this->assertContains('/js/i18n/elfinder.ru.js', $out);
-        $this->assertContains('"lang":"ru"', $out); // has lang param
+        $this->assertStringContainsString('/js/i18n/elfinder.ru.js', $out);
+        $this->assertStringContainsString('"lang":"ru"', $out); // has lang param
     }
 
-    public function testLangParamJp()
+    public function testLangParamJp(): void
     {
         $view = $this->mockView();
 
@@ -62,11 +61,11 @@ class ElFinderTest extends TestCase
             ],
         ]);
 
-        $this->assertContains('/js/i18n/elfinder.ja.js', $out);
-        $this->assertContains('"lang":"ja"', $out);
+        $this->assertStringContainsString('/js/i18n/elfinder.ja.js', $out);
+        $this->assertStringContainsString('"lang":"ja"', $out);
     }
 
-    public function testLangParamPt()
+    public function testLangParamPt(): void
     {
         $view = $this->mockView();
 
@@ -77,11 +76,11 @@ class ElFinderTest extends TestCase
             ],
         ]);
 
-        $this->assertContains('/js/i18n/elfinder.pt_BR.js', $out);
-        $this->assertContains('"lang":"pt_BR"', $out);
+        $this->assertStringContainsString('/js/i18n/elfinder.pt_BR.js', $out);
+        $this->assertStringContainsString('"lang":"pt_BR"', $out);
     }
 
-    public function testLangParamUg()
+    public function testLangParamUg(): void
     {
         $view = $this->mockView();
 
@@ -92,11 +91,11 @@ class ElFinderTest extends TestCase
             ],
         ]);
 
-        $this->assertContains('/js/i18n/elfinder.ug_CN.js', $out);
-        $this->assertContains('"lang":"ug_CN"', $out);
+        $this->assertStringContainsString('/js/i18n/elfinder.ug_CN.js', $out);
+        $this->assertStringContainsString('"lang":"ug_CN"', $out);
     }
 
-    public function testLangParamZh()
+    public function testLangParamZh(): void
     {
         $view = $this->mockView();
 
@@ -107,11 +106,11 @@ class ElFinderTest extends TestCase
             ],
         ]);
 
-        $this->assertContains('/js/i18n/elfinder.zh_CN.js', $out);
-        $this->assertContains('"lang":"zh_CN"', $out);
+        $this->assertStringContainsString('/js/i18n/elfinder.zh_CN.js', $out);
+        $this->assertStringContainsString('"lang":"zh_CN"', $out);
     }
 
-    public function testLangParamZhTw()
+    public function testLangParamZhTw(): void
     {
         $view = $this->mockView();
 
@@ -122,11 +121,11 @@ class ElFinderTest extends TestCase
             ],
         ]);
 
-        $this->assertContains('/js/i18n/elfinder.zh_TW.js', $out);
-        $this->assertContains('"lang":"zh_TW"', $out);
+        $this->assertStringContainsString('/js/i18n/elfinder.zh_TW.js', $out);
+        $this->assertStringContainsString('"lang":"zh_TW"', $out);
     }
 
-    public function testDisabledLangParam()
+    public function testDisabledLangParam(): void
     {
         $view = $this->mockView();
 
@@ -137,11 +136,11 @@ class ElFinderTest extends TestCase
             ],
         ]);
 
-        $this->assertNotContains('/js/i18n/elfinder', $out); // no lang file
-        $this->assertNotContains('"lang":', $out); // no lang param
+        $this->assertStringNotContainsString('/js/i18n/elfinder', $out); // no lang file
+        $this->assertStringNotContainsString('"lang":', $out); // no lang param
     }
 
-    public function testUnknownLangParam()
+    public function testUnknownLangParam(): void
     {
         $view = $this->mockView();
 
@@ -152,11 +151,11 @@ class ElFinderTest extends TestCase
             ],
         ]);
 
-        $this->assertNotContains('/js/i18n/elfinder', $out); // no lang file
-        $this->assertNotContains('"lang":', $out); // no lang param
+        $this->assertStringNotContainsString('/js/i18n/elfinder', $out); // no lang file
+        $this->assertStringNotContainsString('"lang":', $out); // no lang param
     }
 
-    public function testDefaultHeightParam()
+    public function testDefaultHeightParam(): void
     {
         $view = $this->mockView();
 
@@ -168,7 +167,7 @@ class ElFinderTest extends TestCase
         $this->assertRegExp('/(' . preg_quote('"height":"100%"') . ')|(' . preg_quote('jQuery(window).height() - 2') . ')/', $out);
     }
 
-    public function testDisabledHeightParam()
+    public function testDisabledHeightParam(): void
     {
         $view = $this->mockView();
 
@@ -179,10 +178,10 @@ class ElFinderTest extends TestCase
             ],
         ]);
 
-        $this->assertNotContains('"height":', $out);
+        $this->assertStringNotContainsString('"height":', $out);
     }
 
-    public function testButtonNoConflictEnabled()
+    public function testButtonNoConflictEnabled(): void
     {
         $view = $this->mockView();
 
@@ -197,10 +196,10 @@ class ElFinderTest extends TestCase
             'content' => $content,
         ]);
 
-        $this->assertContains('if (jQuery.fn.button.noConflict) { jQuery.fn.btn = jQuery.fn.button.noConflict(); }', $out);
+        $this->assertStringContainsString('if (jQuery.fn.button.noConflict) { jQuery.fn.btn = jQuery.fn.button.noConflict(); }', $out);
     }
 
-    public function testPaths()
+    public function testPaths(): void
     {
         $view = $this->mockView();
 
@@ -211,7 +210,7 @@ class ElFinderTest extends TestCase
             'settings' => [],
         ]);
 
-        $this->assertContains('"baseUrl":"' . $bundle->baseUrl, $out);
-        $this->assertContains('"soundPath":"' . $bundle->baseUrl . '/sounds"', $out);
+        $this->assertStringContainsString('"baseUrl":"' . $bundle->baseUrl, $out);
+        $this->assertStringContainsString('"soundPath":"' . $bundle->baseUrl . '/sounds"', $out);
     }
 }

@@ -6,7 +6,7 @@ use Yii;
 
 class TinyMCEActionTest extends TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->mockWebApplication([
@@ -26,7 +26,7 @@ class TinyMCEActionTest extends TestCase
         ]);
     }
 
-    public function testRunning()
+    public function testRunning(): void
     {
         $out = Yii::$app->runAction('elfinder/tinymce');
 

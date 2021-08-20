@@ -7,7 +7,7 @@ use yii\web\AssetBundle;
 
 class ElFinderAssetTest extends TestCase
 {
-    public function testRegister()
+    public function testRegister(): void
     {
         $view = $this->mockView();
 
@@ -16,16 +16,16 @@ class ElFinderAssetTest extends TestCase
         $bundle = ElFinderAsset::register($view);
 
         // JqueryAsset, JuiAsset, ElFinderAsset
-        $this->assertEquals(3, count($view->assetBundles));
+        $this->assertCount(3, $view->assetBundles);
 
         $this->assertArrayHasKey('alexantr\\elfinder\\ElFinderAsset', $view->assetBundles);
         $this->assertTrue($view->assetBundles['alexantr\\elfinder\\ElFinderAsset'] instanceof AssetBundle);
 
         $out = $view->renderFile('@tests/data/views/layout.php');
 
-        $this->assertContains('/css/elfinder.min.css', $out);
-        $this->assertContains('/css/theme.css', $out);
-        $this->assertContains('/js/elfinder.min.js', $out);
+        $this->assertStringContainsString('/css/elfinder.min.css', $out);
+        $this->assertStringContainsString('/css/theme.css', $out);
+        $this->assertStringContainsString('/js/elfinder.min.js', $out);
 
         $this->assertFileExists($bundle->basePath . '/css/elfinder.min.css', $out);
         $this->assertFileExists($bundle->basePath . '/js/elfinder.min.js', $out);
