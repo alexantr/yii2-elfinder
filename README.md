@@ -3,11 +3,6 @@
 This extension integrates an [elFinder 2.1](http://studio-42.github.io/elFinder/) file manager into
 [Yii framework 2.0](http://www.yiiframework.com).
 
-[![Latest Stable Version](https://img.shields.io/packagist/v/alexantr/yii2-elfinder.svg)](https://packagist.org/packages/alexantr/yii2-elfinder)
-[![Total Downloads](https://img.shields.io/packagist/dt/alexantr/yii2-elfinder.svg)](https://packagist.org/packages/alexantr/yii2-elfinder)
-[![License](https://img.shields.io/github/license/alexantr/yii2-elfinder.svg)](https://raw.githubusercontent.com/alexantr/yii2-elfinder/master/LICENSE)
-[![Build Status](https://travis-ci.org/alexantr/yii2-elfinder.svg?branch=master)](https://travis-ci.org/alexantr/yii2-elfinder)
-
 ## Installation
 
 Install extension through [composer](http://getcomposer.org/):
